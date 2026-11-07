@@ -415,3 +415,11 @@ setInterval(refreshIfDayChanged, 60 * 1000);
 items = loadItems();
 setDayMode('today');
 render();
+
+// service worker の登録（オフラインで開けるようにする）。
+// ファイルを直接開いたとき（file://）は使えないので登録しない
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => { /* 失敗してもアプリは普通に使える */ });
+  });
+}
