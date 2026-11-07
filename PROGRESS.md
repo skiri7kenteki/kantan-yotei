@@ -23,12 +23,14 @@ v1 のアプリ本体は完成（PC で動作確認済み）。次は GitHub で
 - [x] 画面と基本機能（追加・表示・完了チェック・削除・保存）
 - [x] バックアップ（書き出し・読み込み）
 - [x] PWA 化（manifest・service worker・アイコン）
-- [ ] GitHub アカウント作成 → リポジトリ作成 → push → GitHub Pages を有効化
+- [x] GitHub アカウント作成（skiri7kenteki）・リポジトリ作成（public）
+- [ ] push（初回はログインが必要なので、VS Code のターミナルで本人が実行）→ GitHub Pages を有効化
+  - 公開 URL（予定）：https://skiri7kenteki.github.io/kantan-yotei/
 - [ ] iPad の Safari で開いて「ホーム画面に追加」→ 1 週間ほど毎日使ってみる
 - [ ] 使ってみて不便だった点をここにメモ → v2 で何を足すか決める（候補：編集、繰り返し、並べ替え）
 
 ## 困っていること・メモ
-- GitHub アカウントはまだ無い。公開の段階で作成する
+- Claude のターミナルからはログイン画面を出せないため、ログインが必要な push は本人のターミナルで行う（一度ログインすれば以後は記憶される）
 - iPad の実機ではまだ確認していない（特に：日付選択、共有メニューでの書き出し、ファイルからの読み込み）
 - データは「端末ごと・開き方ごと」に別。iPad では Safari とホーム画面アプリでも別なので、ホーム画面から開く運用にする
-- git のコミット用メールアドレスは仮（`kantan-yotei@example.invalid`）。GitHub アカウント作成後に GitHub が用意する非公開用アドレス（noreply）に変えると、本物のメールが公開されない
+- git のコミット用メールアドレスは GitHub の非公開用アドレス（`353766803+skiri7kenteki@users.noreply.github.com`）に設定済み。最初の 4 つのコミットだけ仮アドレス（`kantan-yotei@example.invalid`）のまま（実害なし）
