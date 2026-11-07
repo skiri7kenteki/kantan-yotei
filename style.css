@@ -1,0 +1,215 @@
+/* ===== 色などの共通設定（ライト／ダーク） ===== */
+:root {
+  --bg: #f4f5f8;
+  --card: #ffffff;
+  --text: #1d1f24;
+  --muted: #6b7280;
+  --line: #e2e5ea;
+  --primary: #2f6fde;
+  --primary-text: #ffffff;
+  --chip: #e8eefb;
+  --warn: #c2410c;
+  --danger: #b91c1c;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111317;
+    --card: #1c1f25;
+    --text: #eceef2;
+    --muted: #9aa1ad;
+    --line: #2c3038;
+    --primary: #5b8ff0;
+    --primary-text: #0b1020;
+    --chip: #263049;
+    --warn: #fb923c;
+    --danger: #f87171;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  /* ホーム画面アプリのとき、画面の端（ホームバー等）を避ける */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 16px 48px;
+}
+
+button, input { font: inherit; color: inherit; }
+
+/* ===== ボタン共通（指で押しやすい 48px 以上） ===== */
+.btn {
+  min-height: 52px;
+  padding: 0 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  cursor: pointer;
+  font-weight: 600;
+  touch-action: manipulation; /* ダブルタップでのズームを防ぐ */
+}
+.btn-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-text);
+}
+.btn:active, .chip:active { transform: scale(0.97); }
+
+/* ===== 追加フォーム ===== */
+.add {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.add-row { display: flex; gap: 10px; align-items: center; }
+.add-options { margin-top: 10px; flex-wrap: wrap; }
+
+.add-title {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-size: 20px;
+}
+.add-title:focus, .add-time:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--chip);
+  cursor: pointer;
+  font-weight: 600;
+  touch-action: manipulation;
+}
+.chip.is-selected {
+  background: var(--primary);
+  color: var(--primary-text);
+}
+/* 「日付を選ぶ」：透明な日付入力を上に重ね、タップでカレンダーが開くようにする */
+.chip-date input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.add-time {
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-size: 18px;
+}
+
+/* ===== お知らせ（追加しました 等） ===== */
+.message {
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--chip);
+  font-size: 16px;
+}
+.message.is-error { color: var(--danger); }
+
+/* ===== 一覧 ===== */
+.list-section { margin-top: 24px; }
+.list-section h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+.sub { font-size: 15px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.empty { padding: 16px; color: var(--muted); font-size: 16px; }
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 8px 10px 8px 6px;
+  border-top: 1px solid var(--line);
+}
+.item:first-child { border-top: none; }
+
+/* 完了チェック（丸ボタン） */
+.check {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.check::before {
+  content: "";
+  width: 30px;
+  height: 30px;
+  border: 2.5px solid var(--muted);
+  border-radius: 50%;
+}
+.item.is-done .check::before {
+  border-color: var(--primary);
+  background: var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 20px no-repeat;
+}
+
+.item-body { flex: 1; min-width: 0; }
+.item-title { overflow-wrap: anywhere; }
+.item-meta { font-size: 15px; color: var(--muted); }
+.item-meta .overdue { color: var(--warn); font-weight: 600; }
+.item.is-done .item-title { color: var(--muted); text-decoration: line-through; }
+
+.delete {
+  flex: none;
+  min-height: 48px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  color: var(--danger);
+  font-size: 16px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.delete:active { background: var(--bg); }

@@ -1,0 +1,338 @@
+'use strict';
+
+// ===== 設定 =====
+const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
+const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
+const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
+
+// iPad / iPhone かどうか（iPadOS は「Mac」と名乗るので、タッチ対応かどうかで見分ける）
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
+
+// ===== 画面の部品 =====
+const form = document.getElementById('add-form');
+const titleInput = document.getElementById('title');
+const dateInput = document.getElementById('date');
+const dateLabel = document.getElementById('date-label');
+const timeInput = document.getElementById('time');
+const timeToggle = document.getElementById('time-toggle');
+const dayChips = document.querySelectorAll('.chip[data-day]');
+const dateChip = dateInput.closest('.chip');
+const messageEl = document.getElementById('message');
+const todayLabel = document.getElementById('today-label');
+const listToday = document.getElementById('list-today');
+const listWeek = document.getElementById('list-week');
+const listLater = document.getElementById('list-later');
+
+// ===== 日付の道具（すべて端末のローカル時刻。"YYYY-MM-DD" の文字列で扱う） =====
+function toDateStr(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function parseDateStr(s) {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function addDays(s, n) {
+  const d = parseDateStr(s);
+  d.setDate(d.getDate() + n);
+  return toDateStr(d);
+}
+
+function todayStr() {
+  return toDateStr(new Date());
+}
+
+// 今週の日曜日（週は月曜始まり。今日が日曜なら今日）
+function endOfWeekStr(today) {
+  const dow = parseDateStr(today).getDay(); // 0=日, 1=月, ... 6=土
+  return addDays(today, (7 - dow) % 7);
+}
+
+// "2026-11-09" → "11/9(月)"
+function formatDate(s) {
+  const d = parseDateStr(s);
+  return `${d.getMonth() + 1}/${d.getDate()}(${WEEKDAYS[d.getDay()]})`;
+}
+
+// ===== データ =====
+let items = [];
+
+function newId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+// 予定 1 件として正しい形かどうか
+function isValidItem(x) {
+  return x !== null && typeof x === 'object' &&
+    typeof x.title === 'string' && x.title.trim() !== '' &&
+    typeof x.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(x.date);
+}
+
+// 読み込んだデータを、決まった形に整える（壊れた項目は捨てる・id の重複は付け直す）
+function normalizeItems(list) {
+  const seen = new Set();
+  const result = [];
+  for (const x of list) {
+    if (!isValidItem(x)) continue;
+    let id = typeof x.id === 'string' && x.id ? x.id : newId();
+    if (seen.has(id)) id = newId();
+    seen.add(id);
+    result.push({
+      id,
+      title: x.title.trim().slice(0, 200),
+      date: x.date,
+      time: typeof x.time === 'string' && /^\d{2}:\d{2}$/.test(x.time) ? x.time : '',
+      done: x.done === true,
+      createdAt: Number.isFinite(x.createdAt) ? x.createdAt : Date.now(),
+    });
+  }
+  return result;
+}
+
+function loadItems() {
+  let raw = null;
+  try {
+    raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const data = JSON.parse(raw);
+    if (!data || !Array.isArray(data.items)) throw new Error('形式が違います');
+    return normalizeItems(data.items);
+  } catch (err) {
+    // 読めなかったデータは消さずに別の名前で取っておく（次の保存で上書きされないように）
+    try { if (raw) localStorage.setItem(BROKEN_KEY, raw); } catch (e) { /* 何もしない */ }
+    showMessage('保存データを読み込めませんでした。バックアップがあれば「読み込み」で戻せます。', true);
+    return [];
+  }
+}
+
+function saveItems() {
+  try {
+    const data = { app: 'kantan-yotei', version: 1, items };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    return true;
+  } catch (err) {
+    showMessage('保存できませんでした。ブラウザの容量や設定を確認してください。', true);
+    return false;
+  }
+}
+
+// ===== お知らせ表示 =====
+let messageTimer = null;
+
+function showMessage(text, isError = false) {
+  messageEl.textContent = text;
+  messageEl.classList.toggle('is-error', isError);
+  messageEl.hidden = false;
+  clearTimeout(messageTimer);
+  // エラーは自分で読めるよう長めに出す
+  messageTimer = setTimeout(() => { messageEl.hidden = true; }, isError ? 8000 : 3000);
+}
+
+// ===== 一覧の表示 =====
+
+// 並び順：日付 → 未完了が先 → 時刻ありが先（時刻順） → 追加した順
+function sortItems(list) {
+  return list.slice().sort((a, b) =>
+    a.date.localeCompare(b.date) ||
+    Number(a.done) - Number(b.done) ||
+    (a.time === '') - (b.time === '') ||
+    a.time.localeCompare(b.time) ||
+    a.createdAt - b.createdAt
+  );
+}
+
+function createItemEl(item, today) {
+  const li = document.createElement('li');
+  li.className = 'item' + (item.done ? ' is-done' : '');
+  li.dataset.id = item.id;
+
+  const check = document.createElement('button');
+  check.type = 'button';
+  check.className = 'check';
+  check.setAttribute('aria-pressed', String(item.done));
+  check.setAttribute('aria-label', item.done ? '未完了に戻す' : '完了にする');
+
+  const body = document.createElement('div');
+  body.className = 'item-body';
+
+  const title = document.createElement('div');
+  title.className = 'item-title';
+  title.textContent = item.title; // innerHTML は使わない（CLAUDE.md 参照）
+  body.append(title);
+
+  // 日付・時刻などの補足（今日の予定なら日付は省く）
+  const meta = document.createElement('div');
+  meta.className = 'item-meta';
+  if (item.date < today) {
+    const overdue = document.createElement('span');
+    overdue.className = 'overdue';
+    overdue.textContent = `やり残し・${formatDate(item.date)}`;
+    meta.append(overdue);
+  } else if (item.date !== today) {
+    meta.append(formatDate(item.date));
+  }
+  if (item.time) {
+    if (meta.childNodes.length) meta.append('　');
+    meta.append(item.time);
+  }
+  if (meta.childNodes.length) body.append(meta);
+
+  const del = document.createElement('button');
+  del.type = 'button';
+  del.className = 'delete';
+  del.textContent = '削除';
+
+  li.append(check, body, del);
+  return li;
+}
+
+function renderList(ul, list, today, emptyText) {
+  ul.replaceChildren();
+  if (list.length === 0) {
+    const li = document.createElement('li');
+    li.className = 'empty';
+    li.textContent = emptyText;
+    ul.append(li);
+    return;
+  }
+  for (const item of list) ul.append(createItemEl(item, today));
+}
+
+let renderedToday = '';
+
+function render() {
+  const today = todayStr();
+  const weekEnd = endOfWeekStr(today);
+  renderedToday = today;
+  todayLabel.textContent = formatDate(today);
+
+  // 過去の予定：未完了なら「やり残し」として今日に出す。完了済みは表示しない
+  const overdue = items.filter(i => i.date < today && !i.done);
+  const todays = items.filter(i => i.date === today);
+  const week = items.filter(i => i.date > today && i.date <= weekEnd);
+  const later = items.filter(i => i.date > weekEnd);
+
+  renderList(listToday, [...sortItems(overdue), ...sortItems(todays)], today, '今日の予定はありません');
+  renderList(listWeek, sortItems(week), today, '予定はありません');
+  renderList(listLater, sortItems(later), today, '予定はありません');
+}
+
+// ===== 予定の追加・完了・削除 =====
+function addItem(title, date, time) {
+  items.push({ id: newId(), title, date, time, done: false, createdAt: Date.now() });
+  const saved = saveItems();
+  render();
+  return saved;
+}
+
+function toggleDone(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  item.done = !item.done;
+  saveItems();
+  render();
+}
+
+function deleteItem(id) {
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  if (!confirm(`「${item.title}」を削除しますか？`)) return;
+  items = items.filter(i => i.id !== id);
+  saveItems();
+  render();
+}
+
+// 一覧のボタン（チェック・削除）はまとめて受け取る
+function onListClick(event) {
+  const button = event.target.closest('button');
+  const li = event.target.closest('.item');
+  if (!button || !li) return;
+  if (button.classList.contains('check')) toggleDone(li.dataset.id);
+  if (button.classList.contains('delete')) deleteItem(li.dataset.id);
+}
+for (const ul of [listToday, listWeek, listLater]) ul.addEventListener('click', onListClick);
+
+// ===== 追加フォーム =====
+
+// 選んでいる日付：'today' / 'tomorrow' / 'custom'（custom のときは dateInput の値）
+// 「今日」を日付ではなく種類で覚えておくと、日付が変わっても正しく今日になる
+let dayMode = 'today';
+
+function selectedDate() {
+  const today = todayStr();
+  if (dayMode === 'tomorrow') return addDays(today, 1);
+  if (dayMode === 'custom' && dateInput.value) return dateInput.value;
+  return today;
+}
+
+function setDayMode(mode) {
+  dayMode = mode;
+  for (const chip of dayChips) chip.classList.toggle('is-selected', chip.dataset.day === mode);
+  dateChip.classList.toggle('is-selected', mode === 'custom');
+  dateLabel.textContent = mode === 'custom' ? formatDate(dateInput.value) : '日付を選ぶ';
+  if (mode !== 'custom') dateInput.value = '';
+}
+
+for (const chip of dayChips) {
+  chip.addEventListener('click', () => setDayMode(chip.dataset.day));
+}
+
+dateInput.addEventListener('change', () => {
+  setDayMode(dateInput.value ? 'custom' : 'today');
+});
+
+// PC のブラウザでは、日付欄のどこを押してもカレンダーが開くようにする（iPad は元から開く）
+dateInput.addEventListener('click', () => {
+  if (!isIOS && typeof dateInput.showPicker === 'function') {
+    try { dateInput.showPicker(); } catch (e) { /* 対応していないブラウザは何もしない */ }
+  }
+});
+
+function setTimeVisible(visible) {
+  timeInput.hidden = !visible;
+  timeToggle.textContent = visible ? '時刻なし' : '＋時刻';
+  if (!visible) timeInput.value = '';
+}
+
+timeToggle.addEventListener('click', () => {
+  const show = timeInput.hidden;
+  setTimeVisible(show);
+  if (show) timeInput.focus();
+});
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const title = titleInput.value.trim();
+  if (!title) {
+    showMessage('タイトルを入れてください');
+    titleInput.focus();
+    return;
+  }
+  const date = selectedDate();
+  if (addItem(title, date, timeInput.value)) {
+    showMessage(`「${title}」を ${formatDate(date)} に追加しました`);
+  }
+  // 続けて入れられるよう、タイトルと時刻だけ空にする（日付の選択はそのまま）
+  titleInput.value = '';
+  setTimeVisible(false);
+  titleInput.focus();
+});
+
+// ===== 日付が変わったら表示を更新（アプリを開きっぱなしにしていた場合） =====
+function refreshIfDayChanged() {
+  if (todayStr() !== renderedToday) render();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') refreshIfDayChanged();
+});
+setInterval(refreshIfDayChanged, 60 * 1000);
+
+// ===== 起動 =====
+items = loadItems();
+setDayMode('today');
+render();

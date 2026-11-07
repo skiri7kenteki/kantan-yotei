@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>かんたん予定</title>
+  <meta name="theme-color" content="#2f6fde">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app">
+    <!-- 追加フォーム：タイトルを打って Enter（または「追加」）で完了 -->
+    <form id="add-form" class="add" autocomplete="off">
+      <div class="add-row">
+        <input id="title" class="add-title" type="text" placeholder="予定・やることを入力" enterkeyhint="done" maxlength="200" aria-label="予定のタイトル">
+        <button type="submit" class="btn btn-primary">追加</button>
+      </div>
+      <div class="add-row add-options">
+        <div class="chips" role="group" aria-label="日付">
+          <button type="button" class="chip" data-day="today">今日</button>
+          <button type="button" class="chip" data-day="tomorrow">明日</button>
+          <label class="chip chip-date">
+            <span id="date-label">日付を選ぶ</span>
+            <input id="date" type="date" aria-label="日付を選ぶ">
+          </label>
+        </div>
+        <button type="button" id="time-toggle" class="chip">＋時刻</button>
+        <input id="time" class="add-time" type="time" hidden aria-label="時刻">
+      </div>
+    </form>
+
+    <p id="message" class="message" role="status" hidden></p>
+
+    <section class="list-section">
+      <h2>今日 <span id="today-label" class="sub"></span></h2>
+      <ul id="list-today" class="list"></ul>
+    </section>
+
+    <section class="list-section">
+      <h2>今週 <span class="sub">明日〜日曜</span></h2>
+      <ul id="list-week" class="list"></ul>
+    </section>
+
+    <section class="list-section">
+      <h2>これから <span class="sub">来週以降</span></h2>
+      <ul id="list-later" class="list"></ul>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
