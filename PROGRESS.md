@@ -1,7 +1,7 @@
 # 進捗メモ
 
 ## 現在の状況
-v1 のアプリ本体は完成（PC で動作確認済み）。次は GitHub で公開して iPad で使い始める。
+v1 を GitHub Pages で公開済み。次は iPad のホーム画面に追加して使い始める。
 
 ## 完了したこと
 - 2026-11-07 git をインストール（winget）し、`kantan-yotei` フォルダで git 管理を開始
@@ -24,8 +24,8 @@ v1 のアプリ本体は完成（PC で動作確認済み）。次は GitHub で
 - [x] バックアップ（書き出し・読み込み）
 - [x] PWA 化（manifest・service worker・アイコン）
 - [x] GitHub アカウント作成（skiri7kenteki）・リポジトリ作成（public）
-- [ ] push（初回はログインが必要なので、VS Code のターミナルで本人が実行）→ GitHub Pages を有効化
-  - 公開 URL（予定）：https://skiri7kenteki.github.io/kantan-yotei/
+- [x] push（本人のターミナルで実行）→ GitHub Pages を有効化（main / root）
+  - 公開 URL：https://skiri7kenteki.github.io/kantan-yotei/ （2026-11-07 PC で表示確認済み）
 - [ ] iPad の Safari で開いて「ホーム画面に追加」→ 1 週間ほど毎日使ってみる
 - [ ] 使ってみて不便だった点をここにメモ → v2 で何を足すか決める（候補：編集、繰り返し、並べ替え）
 
