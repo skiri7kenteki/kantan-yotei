@@ -45,6 +45,17 @@
       <h2>これから <span class="sub">来週以降</span></h2>
       <ul id="list-later" class="list"></ul>
     </section>
+
+    <!-- バックアップ：JSON ファイルに書き出す／ファイルから戻す -->
+    <section class="list-section backup">
+      <h2>バックアップ</h2>
+      <p class="note">予定はこの端末の中だけに保存されています。ときどき書き出しておくと安心です。</p>
+      <div class="backup-buttons">
+        <button type="button" id="export" class="btn">書き出し</button>
+        <button type="button" id="import" class="btn">読み込み</button>
+      </div>
+      <input id="import-file" type="file" accept=".json,application/json" hidden>
+    </section>
   </main>
 
   <script src="./app.js"></script>

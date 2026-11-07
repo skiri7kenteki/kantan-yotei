@@ -213,3 +213,9 @@ button, input { font: inherit; color: inherit; }
   touch-action: manipulation;
 }
 .delete:active { background: var(--bg); }
+
+/* ===== バックアップ ===== */
+.backup { margin-top: 40px; }
+.note { margin: 0 0 12px; font-size: 15px; color: var(--muted); }
+.backup-buttons { display: flex; gap: 10px; }
+.backup-buttons .btn { flex: 1; max-width: 220px; }

@@ -23,6 +23,9 @@ const todayLabel = document.getElementById('today-label');
 const listToday = document.getElementById('list-today');
 const listWeek = document.getElementById('list-week');
 const listLater = document.getElementById('list-later');
+const exportButton = document.getElementById('export');
+const importButton = document.getElementById('import');
+const importFile = document.getElementById('import-file');
 
 // ===== 日付の道具（すべて端末のローカル時刻。"YYYY-MM-DD" の文字列で扱う） =====
 function toDateStr(d) {
@@ -321,6 +324,82 @@ form.addEventListener('submit', (event) => {
   titleInput.value = '';
   setTimeVisible(false);
   titleInput.focus();
+});
+
+// ===== バックアップ（書き出し・読み込み） =====
+
+// PC：ファイルとしてダウンロードする
+function downloadFile(file) {
+  const url = URL.createObjectURL(file);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = file.name;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showMessage(`${file.name} を書き出しました`);
+}
+
+// iPad：共有メニューを出す（「"ファイル"に保存」で保存できる）
+async function shareFile(file) {
+  try {
+    await navigator.share({ files: [file] });
+    showMessage('書き出しました');
+  } catch (err) {
+    if (err.name === 'AbortError') return; // 共有メニューを閉じただけ
+    downloadFile(file);
+  }
+}
+
+function exportBackup() {
+  const data = { app: 'kantan-yotei', version: 1, exportedAt: new Date().toISOString(), items };
+  const json = JSON.stringify(data, null, 2);
+  const file = new File([json], `kantan-yotei-${todayStr()}.json`, { type: 'application/json' });
+  if (isIOS && navigator.canShare && navigator.canShare({ files: [file] })) {
+    shareFile(file);
+  } else {
+    downloadFile(file);
+  }
+}
+
+async function importBackup(file) {
+  let data;
+  try {
+    data = JSON.parse(await file.text());
+  } catch (err) {
+    showMessage('ファイルを読み込めませんでした（JSON 形式ではありません）', true);
+    return;
+  }
+  if (!data || data.app !== 'kantan-yotei' || !Array.isArray(data.items)) {
+    showMessage('「かんたん予定」のバックアップファイルではありません', true);
+    return;
+  }
+  if (data.version > 1) {
+    showMessage('新しい版のアプリで作られたファイルのため読み込めません', true);
+    return;
+  }
+  const newItems = normalizeItems(data.items);
+  const skipped = data.items.length - newItems.length;
+  if (!confirm(`今の予定 ${items.length} 件を、ファイルの予定 ${newItems.length} 件で置き換えます。よろしいですか？`)) return;
+
+  const oldItems = items;
+  items = newItems;
+  if (!saveItems()) {
+    items = oldItems; // 保存できなかったら元に戻す
+    render();
+    return;
+  }
+  render();
+  showMessage(`${newItems.length} 件を読み込みました` + (skipped ? `（形式が正しくない ${skipped} 件は除きました）` : ''));
+}
+
+exportButton.addEventListener('click', exportBackup);
+importButton.addEventListener('click', () => importFile.click());
+importFile.addEventListener('change', async () => {
+  const file = importFile.files[0];
+  if (file) await importBackup(file);
+  importFile.value = ''; // 同じファイルをもう一度選べるようにする
 });
 
 // ===== 日付が変わったら表示を更新（アプリを開きっぱなしにしていた場合） =====
