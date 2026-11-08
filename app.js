@@ -411,10 +411,28 @@ document.addEventListener('visibilitychange', () => {
 });
 setInterval(refreshIfDayChanged, 60 * 1000);
 
+// ===== 起動直後の拡大表示対策 =====
+// iPad のホーム画面アプリを横向きで開くと、最初だけ縦向きの幅で作った画面が引き伸ばされ、
+// 拡大率（visualViewport.scale）が 1 より大きくなる。1 に戻ったら中身を表示する
+function revealWhenScaleSettles() {
+  const vv = window.visualViewport;
+  const show = () => document.documentElement.classList.remove('is-settling');
+  const settled = () => !vv || Math.abs(vv.scale - 1) < 0.01;
+  if (settled()) { show(); return; }
+  const check = () => {
+    if (!settled()) return;
+    vv.removeEventListener('resize', check);
+    show();
+  };
+  vv.addEventListener('resize', check);
+  // 1 秒たっても戻らないときは index.html 側の仕組みで表示される
+}
+
 // ===== 起動 =====
 items = loadItems();
 setDayMode('today');
 render();
+revealWhenScaleSettles();
 
 // service worker の登録（オフラインで開けるようにする）。
 // ファイルを直接開いたとき（file://）は使えないので登録しない

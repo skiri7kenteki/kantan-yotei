@@ -14,6 +14,12 @@
   <meta name="apple-mobile-web-app-title" content="かんたん予定">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="stylesheet" href="./style.css">
+  <script>
+    // 横画面で開いた直後に iPad が一瞬拡大表示するのを隠す（app.js が拡大の戻りを確認して表示する）
+    // 万一のため 1 秒後には必ず表示する
+    document.documentElement.classList.add('is-settling');
+    setTimeout(function () { document.documentElement.classList.remove('is-settling'); }, 1000);
+  </script>
 </head>
 <body>
   <main class="app">
