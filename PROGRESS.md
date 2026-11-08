@@ -71,6 +71,8 @@ arXiv quant-ph の新着は GitHub Actions が毎朝 5 時に集める。平日�
   - ファイル追加：`scripts/fetch_arxiv.py`、`.github/workflows/arxiv.yml`（`arxiv.json` は自動で作られる）
   - 自動テスト：ニュース 20 項目、朝画面 27 項目、基本・バックアップ 32 項目、PWA・オフライン 20 項目すべて合格
     - 本物の NHK から主要・スポーツの見出しを取得できることも確認。fetch_arxiv.py は平日形式のサンプルと本物（日曜＝新着なし）で確認
+  - iPad 版の GitHub には「Run workflow」ボタンが出なかったため、`scripts/fetch_arxiv.py` か `arxiv.yml` を書き換えて push したときも
+    1 回動く（試運転）ようにした。試運転は全手順成功（日曜なので「新着なし」で commit なし＝想定どおり）
 
 ## 次にやること
 - [ ] **月曜（11/9）以降に確認**：平日の朝 5 時の自動実行で arxiv.json が作られ、朝画面に arXiv の新着が出るか
