@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.7';                   // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.8';                  // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -478,6 +478,14 @@ function buildIssueUrl(text) {
   return `${ISSUE_NEW_URL}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
 
+// ホーム画面アプリから普通のリンクを開くと、Safari 本体ではなくアプリに重なる画面で開く。
+// 先頭を x-safari-https:// にすると iPad が Safari 本体で開く（ホーム画面アプリのときだけ使う）
+function setFeedbackLink(url) {
+  const isHomeScreenApp = navigator.standalone === true;
+  feedbackSend.href = isHomeScreenApp ? url.replace('https://', 'x-safari-https://') : url;
+  feedbackSend.target = isHomeScreenApp ? '_self' : '_blank';
+}
+
 function showFeedbackHint(text) {
   feedbackHint.textContent = text;
   feedbackHint.hidden = false;
@@ -508,7 +516,7 @@ feedbackSend.addEventListener('click', (event) => {
     showFeedbackHint('ネットにつながっていません。つながってからもう一度押してください');
     return;
   }
-  feedbackSend.href = buildIssueUrl(text);
+  setFeedbackLink(buildIssueUrl(text));
   setTimeout(() => feedbackDialog.close(), 0); // リンクが開くのを邪魔しないよう、この処理の後で閉じる
 });
 
