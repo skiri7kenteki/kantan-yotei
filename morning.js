@@ -12,7 +12,17 @@ const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast' +
   '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
   '&hourly=precipitation_probability&timezone=Asia%2FTokyo&forecast_days=1';
 const WEATHER_TIMEOUT_MS = 8000;          // これ以上返事がなければ「取得できませんでした」
-const WEATHER_REFRESH_MS = 60 * 60 * 1000; // アプリに戻ってきたとき、1 時間以上たっていたら取り直す
+const WEATHER_REFRESH_MS = 60 * 60 * 1000; // アプリに戻ってきたとき、1 時間以上たっていたら天気・ニュースを取り直す
+
+// ===== ニュースの設定 =====
+const NEWS_COUNT = 3; // 1 つのジャンルに出す件数
+// NHK は「個人の利用に限る・再配信は不可」という規約なので、集めて公開せず iPad から直接読む
+const NHK_FEEDS = [
+  { listId: 'news-nhk-main', url: 'https://www3.nhk.or.jp/rss/news/cat0.xml' },   // 主要
+  { listId: 'news-nhk-sports', url: 'https://www3.nhk.or.jp/rss/news/cat7.xml' }, // スポーツ
+];
+// arXiv は GitHub Actions が毎朝集めて、このアプリと同じ場所に置くファイル（オフラインでも前回分が出る）
+const ARXIV_JSON = './arxiv.json';
 
 // 時間ごとの降水確率の区切り（start 時〜end 時の手前まで）
 const RAIN_PERIODS = [
@@ -57,19 +67,33 @@ function renderMorningHead() {
   document.getElementById('weather-place').textContent = WEATHER_PLACE.name;
 }
 
-// ===== 天気の取得 =====
-let lastWeatherAttempt = 0; // 最後に取りに行った時刻（ミリ秒）
+// ===== 朝画面のネットの情報（天気・ニュース）をまとめて取りに行く =====
+let lastMorningLoad = 0; // 最後に取りに行った時刻（ミリ秒）
+
+function loadMorningData() {
+  lastMorningLoad = Date.now();
+  loadWeather();
+  loadNhk();
+  loadArxiv();
+}
+
+// 前回から 1 時間以上たっていたら取り直す（アプリに戻ってきたとき用）
+function refreshMorningIfOld() {
+  if (Date.now() - lastMorningLoad > WEATHER_REFRESH_MS) loadMorningData();
+}
 
 // 返事が来なければ途中で打ち切る fetch
-async function fetchWithTimeout(url, ms) {
+async function fetchWithTimeout(url, ms, options = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), ms);
   try {
-    return await fetch(url, { signal: controller.signal });
+    return await fetch(url, { ...options, signal: controller.signal });
   } finally {
     clearTimeout(timer);
   }
 }
+
+// ===== 天気の取得 =====
 
 // API の返事から、画面に出す形にまとめる
 function summarizeWeather(data) {
@@ -90,7 +114,6 @@ function summarizeWeather(data) {
 }
 
 async function loadWeather() {
-  lastWeatherAttempt = Date.now();
   showWeatherText('天気を取得しています…');
   try {
     const response = await fetchWithTimeout(WEATHER_URL, WEATHER_TIMEOUT_MS);
@@ -100,11 +123,6 @@ async function loadWeather() {
     // オフライン・時間切れ・形式違いなど。予定の表示には影響させない
     showWeatherError();
   }
-}
-
-// 前回から 1 時間以上たっていたら取り直す（アプリに戻ってきたとき用）
-function refreshWeatherIfOld() {
-  if (Date.now() - lastWeatherAttempt > WEATHER_REFRESH_MS) loadWeather();
 }
 
 // ===== 天気の表示 =====
@@ -172,4 +190,127 @@ function renderWeather(w) {
   updated.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')} 取得`;
 
   weatherEl().replaceChildren(main, periods, updated);
+}
+
+// ===== ニュース：表示の部品 =====
+
+// http / https の URL だけをリンクにする（それ以外の形は危ないので使わない）
+function safeUrl(url) {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'https:' || u.protocol === 'http:' ? u.href : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+// 見出し 1 件（押すと Safari で記事が開く）
+function newsItemEl(title, url, sub) {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  a.className = 'news-link';
+  const href = safeUrl(url);
+  if (href) {
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener';
+  }
+  const t = document.createElement('span');
+  t.className = 'news-title';
+  t.textContent = title;
+  a.append(t);
+  if (sub) {
+    const s = document.createElement('span');
+    s.className = 'news-sub';
+    s.textContent = sub;
+    a.append(s);
+  }
+  li.append(a);
+  return li;
+}
+
+// 「読み込み中…」「取得できませんでした」などの 1 行
+function showNewsText(listId, text, isError = false) {
+  const li = document.createElement('li');
+  li.className = isError ? 'news-msg news-error' : 'news-msg';
+  li.textContent = text;
+  document.getElementById(listId).replaceChildren(li);
+}
+
+// ===== NHK（iPad から直接読む） =====
+
+// XML の中の、ある名前の要素の文字を取り出す
+function textOf(parent, tagName) {
+  const el = parent.getElementsByTagName(tagName)[0];
+  return el ? el.textContent.trim() : '';
+}
+
+// RSS（XML）から見出しとリンクを取り出す
+function parseRssItems(xmlText) {
+  const doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+  if (doc.getElementsByTagName('parsererror').length) throw new Error('RSS の形式が違います');
+  return [...doc.getElementsByTagName('item')]
+    .map(item => ({ title: textOf(item, 'title'), url: textOf(item, 'link') }))
+    .filter(item => item.title !== '');
+}
+
+async function loadNhkFeed(feed) {
+  showNewsText(feed.listId, '読み込み中…');
+  try {
+    const response = await fetchWithTimeout(feed.url, WEATHER_TIMEOUT_MS, { cache: 'no-cache' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const items = parseRssItems(await response.text()).slice(0, NEWS_COUNT);
+    if (items.length === 0) {
+      showNewsText(feed.listId, 'ニュースはありません');
+      return;
+    }
+    document.getElementById(feed.listId).replaceChildren(...items.map(i => newsItemEl(i.title, i.url)));
+  } catch (err) {
+    showNewsText(feed.listId, '取得できませんでした', true);
+  }
+}
+
+function loadNhk() {
+  return Promise.all(NHK_FEEDS.map(loadNhkFeed));
+}
+
+// ===== arXiv（GitHub Actions が毎朝作る arxiv.json を読む） =====
+async function loadArxiv() {
+  const listId = 'news-arxiv';
+  const dateEl = document.getElementById('arxiv-date');
+  const moreEl = document.getElementById('arxiv-more');
+  showNewsText(listId, '読み込み中…');
+  dateEl.textContent = '';
+  moreEl.replaceChildren();
+  try {
+    const response = await fetchWithTimeout(ARXIV_JSON, WEATHER_TIMEOUT_MS, { cache: 'no-cache' });
+    if (response.status === 404) {
+      showNewsText(listId, 'まだ届いていません（平日の朝 5 時ごろに集めます）');
+      return;
+    }
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const data = await response.json();
+    if (!data || !Array.isArray(data.items) || !/^\d{4}-\d{2}-\d{2}$/.test(data.date)) throw new Error('形式が違います');
+
+    dateEl.textContent = formatLongDate(data.date);
+    const items = data.items.filter(i => i && typeof i.title === 'string').slice(0, NEWS_COUNT);
+    if (items.length === 0) {
+      showNewsText(listId, '新着はありません');
+    } else {
+      document.getElementById(listId).replaceChildren(...items.map(i => newsItemEl(i.title, i.url, i.authors)));
+    }
+
+    // 「すべて見る」：arXiv の新着一覧ページへ
+    const listUrl = safeUrl(data.listUrl);
+    if (listUrl) {
+      const a = document.createElement('a');
+      a.href = listUrl;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = Number.isFinite(data.newCount) ? `すべて見る（新着 ${data.newCount} 件）→` : 'すべて見る →';
+      moreEl.append(a);
+    }
+  } catch (err) {
+    showNewsText(listId, '取得できませんでした', true);
+  }
 }

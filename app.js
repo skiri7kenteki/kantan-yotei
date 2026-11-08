@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.3';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.4';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -431,14 +431,14 @@ function refreshIfDayChanged(goMorning) {
   if (todayStr() === renderedToday) return;
   render();
   renderMorningHead();
-  loadWeather();
+  loadMorningData();
   if (goMorning) showScreen('morning');
 }
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState !== 'visible') return;
   renderMorningHead(); // 挨拶は時間帯で変わるので毎回更新
   refreshIfDayChanged(true);
-  refreshWeatherIfOld();
+  refreshMorningIfOld();
 });
 setInterval(() => refreshIfDayChanged(false), 60 * 1000);
 
@@ -448,7 +448,7 @@ setDayMode('today');
 render();
 showScreen('morning');
 renderMorningHead();
-loadWeather(); // 失敗しても天気欄に「取得できませんでした」と出るだけで、ほかは普通に動く
+loadMorningData(); // 天気・ニュース。失敗しても各欄に「取得できませんでした」と出るだけで、ほかは普通に動く
 document.getElementById('version').textContent = `かんたん予定 バージョン ${APP_VERSION}`;
 
 // service worker の登録（オフラインで開けるようにする）。

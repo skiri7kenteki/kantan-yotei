@@ -4,7 +4,9 @@
 // 方針は「ネット優先」：つながっていれば最新版を取りに行き、だめなら保存しておいた版を使う
 // ファイルを増やした・減らしたときは APP_FILES を直し、CACHE_NAME の番号を上げる
 
-const CACHE_NAME = 'kantan-yotei-v3';
+// arxiv.json はここに入れない（まだ無い日もあり、無いとインストールが失敗するため）。
+// 一度読めば下の fetch の処理で保存されるので、オフラインでも前回分が出る
+const CACHE_NAME = 'kantan-yotei-v4';
 const APP_FILES = [
   './',
   './index.html',

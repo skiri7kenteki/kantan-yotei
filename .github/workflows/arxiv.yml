@@ -1,0 +1,36 @@
+# GitHub Actions：毎朝 arXiv quant-ph の新着を集めて arxiv.json を更新する
+# - 毎日 日本時間 朝 5 時ごろ（GitHub の混み具合で数十分遅れることがある）
+# - GitHub の「Actions」タブ →「arXiv の新着を集める」→「Run workflow」で手動でも動かせる
+# - 新着が無い日（土日など）は何も変えない
+
+name: arXiv の新着を集める
+
+on:
+  schedule:
+    - cron: '0 20 * * *'   # 世界標準時 20:00 ＝ 日本時間 5:00
+  workflow_dispatch:        # 手動で動かすボタン
+
+permissions:
+  contents: write           # arxiv.json をリポジトリに保存（commit）するため
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取ってくる
+        uses: actions/checkout@v5
+
+      - name: arXiv を読んで arxiv.json を作る
+        run: python3 scripts/fetch_arxiv.py
+
+      - name: 変わっていたら保存する（commit と push）
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A arxiv.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git commit -m "arXiv の新着を更新"
+          git push

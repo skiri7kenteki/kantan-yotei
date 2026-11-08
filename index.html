@@ -49,10 +49,18 @@
         <button type="button" id="go-list" class="btn btn-wide">予定を追加・一覧を見る →</button>
       </section>
 
-      <!-- ニュースは次の版で、GitHub Actions が毎朝集めた news.json を読んで表示する予定 -->
+      <!-- ニュース：NHK は iPad から直接読む／arXiv は GitHub Actions が毎朝集めた arxiv.json を読む -->
       <section class="card" id="news">
         <h2>ニュース</h2>
-        <p class="note">準備中です。次の版で、毎朝自動で集めたニュースをここに表示します。</p>
+        <h3 class="news-head">NHK 主要</h3>
+        <ul id="news-nhk-main" class="news-list"></ul>
+        <h3 class="news-head">NHK スポーツ</h3>
+        <ul id="news-nhk-sports" class="news-list"></ul>
+        <p class="note">出典：<a href="https://www3.nhk.or.jp/news/" target="_blank" rel="noopener">NHKニュース</a></p>
+
+        <h3 class="news-head">arXiv quant-ph 新着 <span id="arxiv-date" class="sub"></span></h3>
+        <ul id="news-arxiv" class="news-list"></ul>
+        <p id="arxiv-more" class="note"></p>
       </section>
     </div>
 
