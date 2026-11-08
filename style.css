@@ -29,6 +29,9 @@
 
 * { box-sizing: border-box; }
 
+/* hidden を付けた物は、ほかの指定（display: flex など）より優先して必ず隠す */
+[hidden] { display: none !important; }
+
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -270,6 +273,7 @@ button, input { font: inherit; color: inherit; }
 .weather-icon { font-size: 48px; line-height: 1; }
 .weather-name { font-size: 22px; font-weight: 600; }
 .weather-temps { font-size: 16px; color: var(--muted); }
+.nowrap { white-space: nowrap; }
 .weather-error { margin: 0 0 10px; color: var(--warn); font-weight: 600; }
 
 .rain-periods {
@@ -287,9 +291,78 @@ button, input { font: inherit; color: inherit; }
 .rain-label { font-size: 14px; color: var(--muted); }
 .rain-value { font-size: 20px; font-weight: 600; }
 
-/* ===== ニュース ===== */
-.news-head { margin: 16px 0 4px; font-size: 16px; color: var(--muted); }
-.news-head:first-of-type { margin-top: 0; }
+.more-link {
+  min-height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* ===== 朝画面を iPad の 1 画面に収める（幅 600px 以上・朝画面のときだけ） =====
+   横向き：3 列（挨拶と天気 ｜ 今日の予定 ｜ arXiv）
+   縦向き：上に挨拶と天気、下に今日の予定と arXiv を左右に並べる
+   入りきらない分は各枠の中で切る（予定は app.js が「ほか ○ 件」にする） */
+@media (min-width: 600px) {
+  body.is-morning { height: 100vh; height: 100dvh; overflow: hidden; }
+  .is-morning .app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 1200px;
+    padding-bottom: 8px;
+  }
+  .is-morning .tabs { flex: none; margin-bottom: 12px; }
+  .is-morning .footer { flex: none; margin-top: 8px; }
+
+  #screen-morning {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "head    head"
+      "weather weather"
+      "today   arxiv";
+  }
+  #screen-morning .morning-head { grid-area: head; margin: 0 4px; }
+  #screen-morning .card-weather { grid-area: weather; }
+  #screen-morning .card-today { grid-area: today; }
+  #screen-morning .card-arxiv { grid-area: arxiv; }
+  #screen-morning .card {
+    margin-top: 0;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  #screen-morning .card h2 { flex: none; }
+  /* 予定の一覧は残りの高さいっぱい。はみ出しは app.js が「ほか ○ 件」にする */
+  #screen-morning #list-morning { flex: 1 1 auto; min-height: 0; overflow: hidden; }
+  #screen-morning .more-link,
+  #screen-morning .btn-wide { flex: none; }
+  #screen-morning .news-list { flex: 0 1 auto; min-height: 0; overflow: hidden; }
+}
+
+@media (min-width: 600px) and (orientation: landscape) {
+  #screen-morning {
+    grid-template-columns: minmax(300px, 0.9fr) 1fr 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+      "head    today arxiv"
+      "weather today arxiv";
+  }
+  #screen-morning .card-weather { align-self: start; }
+  .morning-head h1 { font-size: 26px; }
+}
+
+/* ===== ニュース（arXiv） ===== */
 .news-list { list-style: none; margin: 0; padding: 0; }
 .news-list li { border-top: 1px solid var(--line); }
 .news-list li:first-child { border-top: none; }
@@ -300,7 +373,15 @@ button, input { font: inherit; color: inherit; }
   color: inherit;
   text-decoration: none;
 }
-.news-title { display: block; font-size: 17px; overflow-wrap: anywhere; }
+/* 論文のタイトルは長いので 3 行まで（それ以上は「…」） */
+.news-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
 .news-sub { display: block; font-size: 14px; color: var(--muted); }
 .news-msg { padding: 10px 0; font-size: 15px; color: var(--muted); }
 .news-error { color: var(--warn); font-weight: 600; }

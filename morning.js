@@ -1,6 +1,6 @@
 'use strict';
 
-// 朝画面（挨拶・日付・天気）の処理
+// 朝画面（挨拶・日付・天気・arXiv の新着）の処理
 // このファイルは関数を用意するだけ。起動時や日付が変わったときに app.js が呼ぶ
 // （formatDate など app.js の関数も使うが、呼ばれる時点では app.js が読み込み済み）
 
@@ -15,12 +15,8 @@ const WEATHER_TIMEOUT_MS = 8000;          // これ以上返事がなければ�
 const WEATHER_REFRESH_MS = 60 * 60 * 1000; // アプリに戻ってきたとき、1 時間以上たっていたら天気・ニュースを取り直す
 
 // ===== ニュースの設定 =====
-const NEWS_COUNT = 3; // 1 つのジャンルに出す件数
-// NHK は「個人の利用に限る・再配信は不可」という規約なので、集めて公開せず iPad から直接読む
-const NHK_FEEDS = [
-  { listId: 'news-nhk-main', url: 'https://www3.nhk.or.jp/rss/news/cat0.xml' },   // 主要
-  { listId: 'news-nhk-sports', url: 'https://www3.nhk.or.jp/rss/news/cat7.xml' }, // スポーツ
-];
+// 一般ニュース（NHK など）は出さない：ブラウザから直接読めず、集めて公開すると規約（再配信禁止）に触れるため
+const NEWS_COUNT = 3; // arXiv の新着を出す件数
 // arXiv は GitHub Actions が毎朝集めて、このアプリと同じ場所に置くファイル（オフラインでも前回分が出る）
 const ARXIV_JSON = './arxiv.json';
 
@@ -73,7 +69,6 @@ let lastMorningLoad = 0; // 最後に取りに行った時刻（ミリ秒）
 function loadMorningData() {
   lastMorningLoad = Date.now();
   loadWeather();
-  loadNhk();
   loadArxiv();
 }
 
@@ -164,7 +159,14 @@ function renderWeather(w) {
   name.textContent = label.text;
   const temps = document.createElement('div');
   temps.className = 'weather-temps';
-  temps.textContent = `最高 ${roundTemp(w.max)} ／ 最低 ${roundTemp(w.min)} ／ 降水確率 ${percent(w.rain)}`;
+  // 幅が狭いときは「降水確率」の前で改行されるよう、2 つに分けて途中で折り返さないようにする
+  const tempsPart = document.createElement('span');
+  tempsPart.className = 'nowrap';
+  tempsPart.textContent = `最高 ${roundTemp(w.max)} ／ 最低 ${roundTemp(w.min)} ／ `;
+  const rainPart = document.createElement('span');
+  rainPart.className = 'nowrap';
+  rainPart.textContent = `降水確率 ${percent(w.rain)}`;
+  temps.append(tempsPart, rainPart);
   text.append(name, temps);
   main.append(icon, text);
 
@@ -235,43 +237,6 @@ function showNewsText(listId, text, isError = false) {
   li.className = isError ? 'news-msg news-error' : 'news-msg';
   li.textContent = text;
   document.getElementById(listId).replaceChildren(li);
-}
-
-// ===== NHK（iPad から直接読む） =====
-
-// XML の中の、ある名前の要素の文字を取り出す
-function textOf(parent, tagName) {
-  const el = parent.getElementsByTagName(tagName)[0];
-  return el ? el.textContent.trim() : '';
-}
-
-// RSS（XML）から見出しとリンクを取り出す
-function parseRssItems(xmlText) {
-  const doc = new DOMParser().parseFromString(xmlText, 'application/xml');
-  if (doc.getElementsByTagName('parsererror').length) throw new Error('RSS の形式が違います');
-  return [...doc.getElementsByTagName('item')]
-    .map(item => ({ title: textOf(item, 'title'), url: textOf(item, 'link') }))
-    .filter(item => item.title !== '');
-}
-
-async function loadNhkFeed(feed) {
-  showNewsText(feed.listId, '読み込み中…');
-  try {
-    const response = await fetchWithTimeout(feed.url, WEATHER_TIMEOUT_MS, { cache: 'no-cache' });
-    if (!response.ok) throw new Error('HTTP ' + response.status);
-    const items = parseRssItems(await response.text()).slice(0, NEWS_COUNT);
-    if (items.length === 0) {
-      showNewsText(feed.listId, 'ニュースはありません');
-      return;
-    }
-    document.getElementById(feed.listId).replaceChildren(...items.map(i => newsItemEl(i.title, i.url)));
-  } catch (err) {
-    showNewsText(feed.listId, '取得できませんでした', true);
-  }
-}
-
-function loadNhk() {
-  return Promise.all(NHK_FEEDS.map(loadNhkFeed));
 }
 
 // ===== arXiv（GitHub Actions が毎朝作る arxiv.json を読む） =====

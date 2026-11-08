@@ -31,34 +31,29 @@
 
     <p id="message" class="message" role="status" hidden></p>
 
-    <!-- ===== 朝画面：挨拶・天気・今日の予定・ニュース ===== -->
+    <!-- ===== 朝画面：挨拶・天気・今日の予定・arXiv（iPad では 1 画面に収める。並べ方は style.css） ===== -->
     <div id="screen-morning" class="screen">
       <header class="morning-head">
         <h1 id="greeting"></h1>
         <p id="morning-date" class="morning-date"></p>
       </header>
 
-      <section class="card">
+      <section class="card card-weather">
         <h2>天気 <span id="weather-place" class="sub"></span></h2>
         <div id="weather"></div>
       </section>
 
-      <section class="card">
+      <section class="card card-today">
         <h2>今日の予定</h2>
         <ul id="list-morning" class="list list-plain"></ul>
+        <!-- 枠に入りきらない予定があるときだけ出る（app.js の fitMorningList） -->
+        <button type="button" id="morning-more" class="more-link" hidden></button>
         <button type="button" id="go-list" class="btn btn-wide">予定を追加・一覧を見る →</button>
       </section>
 
-      <!-- ニュース：NHK は iPad から直接読む／arXiv は GitHub Actions が毎朝集めた arxiv.json を読む -->
-      <section class="card" id="news">
-        <h2>ニュース</h2>
-        <h3 class="news-head">NHK 主要</h3>
-        <ul id="news-nhk-main" class="news-list"></ul>
-        <h3 class="news-head">NHK スポーツ</h3>
-        <ul id="news-nhk-sports" class="news-list"></ul>
-        <p class="note">出典：<a href="https://www3.nhk.or.jp/news/" target="_blank" rel="noopener">NHKニュース</a></p>
-
-        <h3 class="news-head">arXiv quant-ph 新着 <span id="arxiv-date" class="sub"></span></h3>
+      <!-- arXiv の新着：GitHub Actions が毎朝集めた arxiv.json を読む -->
+      <section class="card card-arxiv" id="news">
+        <h2>arXiv quant-ph 新着 <span id="arxiv-date" class="sub"></span></h2>
         <ul id="news-arxiv" class="news-list"></ul>
         <p id="arxiv-more" class="note"></p>
       </section>

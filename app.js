@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.4';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.5';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -232,7 +232,34 @@ function render() {
   renderList(listWeek, sortItems(week), today, '予定はありません');
   renderList(listLater, sortItems(later), today, '予定はありません');
   renderList(listMorning, todayList, today, '今日の予定はありません'); // 朝画面にも同じものを出す
+  fitMorningList();
 }
+
+// ===== 朝画面の「今日の予定」を枠に収める =====
+// iPad（幅 600px 以上）では朝画面を 1 画面に収めるので、入りきらない予定は後ろから隠し「ほか ○ 件 →」を出す
+const morningMore = document.getElementById('morning-more');
+const fitsOneScreen = window.matchMedia('(min-width: 600px)');
+
+function fitMorningList() {
+  const lis = [...listMorning.querySelectorAll('.item')];
+  for (const li of lis) li.hidden = false;
+  morningMore.hidden = true;
+  // 朝画面が見えていないとき（大きさが測れない）や、スマホ幅のときは全部出す
+  if (screens.morning.hidden || !fitsOneScreen.matches) return;
+
+  const overflowing = () => listMorning.scrollHeight > listMorning.clientHeight + 1;
+  let hiddenCount = 0;
+  for (let i = lis.length - 1; i > 0 && overflowing(); i--) {
+    lis[i].hidden = true;
+    hiddenCount++;
+    morningMore.textContent = `ほか ${hiddenCount} 件 →`;
+    morningMore.hidden = false;
+  }
+}
+
+// 画面の向きや大きさが変わったら測り直す
+window.addEventListener('resize', () => requestAnimationFrame(fitMorningList));
+morningMore.addEventListener('click', () => showScreen('list'));
 
 // ===== 予定の追加・完了・削除 =====
 function addItem(title, date, time) {
@@ -277,7 +304,10 @@ function showScreen(name) {
     tab.classList.toggle('is-selected', selected);
     tab.setAttribute('aria-pressed', String(selected));
   }
+  // 朝画面のときだけ「1 画面に収める」並べ方にする（style.css の .is-morning）
+  document.body.classList.toggle('is-morning', name === 'morning');
   window.scrollTo(0, 0);
+  if (name === 'morning') fitMorningList();
 }
 
 for (const tab of tabs) tab.addEventListener('click', () => showScreen(tab.dataset.screen));

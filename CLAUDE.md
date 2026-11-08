@@ -7,7 +7,9 @@ iPad の Safari で「ホーム画面に追加」して使う、日付つきの�
 - 「入れるのが面倒」を解消するのが最優先。入力はタイトル＋日付（初期値は今日）だけで完了できること
 - 予定はほぼ時刻なし。時刻は任意（「＋時刻」を押した時だけ出す）
 - 画面は 2 つ。上の「朝｜予定」ボタンで切り替える
-  - **朝**（開いたとき最初に出る）：挨拶と日付 → 天気（東京）→ 今日の予定 → ニュース（NHK 主要・スポーツ、arXiv quant-ph 新着。各 3 件）
+  - **朝**（開いたとき最初に出る）：挨拶と日付・天気（東京）・今日の予定・arXiv quant-ph 新着（3 件）
+    - iPad（幅 600px 以上）では**スクロールせず 1 画面に収める**。横向きは 3 列、縦向きは上に天気・下に予定と arXiv を左右に並べる
+    - 予定が入りきらないときは入る分だけ出し「ほか ○ 件 →」（app.js の `fitMorningList`）。論文タイトルは 3 行まで
   - **予定**：今日（やり残しを含む）／今週（明日〜日曜、月曜始まり）／これから（来週以降）
 - 朝画面の天気が取れなくても（オフライン等）、天気欄に「取得できませんでした」と出すだけで、予定は普通に使えること
 - v1 で**やらない**こと：繰り返し予定、編集、通知、月カレンダー、ログイン・同期
@@ -18,9 +20,9 @@ iPad の Safari で「ホーム画面に追加」して使う、日付つきの�
 - データ保存：localStorage（キー `kantan-yotei.v1`）
 - PWA：`manifest.webmanifest` + `sw.js`（service worker）
 - 天気：Open-Meteo（無料・登録不要・API キー不要）。地域は `morning.js` の `WEATHER_PLACE` に緯度・経度で書く
-- ニュース（取得元ごとに、規約に合わせて取り方を変えている）
-  - NHK：規約が「個人の利用に限る・再配信は不可」なので、**集めて公開しない**。iPad のアプリが RSS を直接読む（NHK はブラウザから読むことを許可している）
-  - arXiv quant-ph：論文の情報は自由に使えるが、ブラウザから直接は読めないので、GitHub Actions が毎朝 5 時に集めて `arxiv.json` に保存する
+- ニュース：arXiv quant-ph の新着だけ。論文の情報は自由に使えるが、ブラウザから直接は読めないので、GitHub Actions が毎朝 5 時に集めて `arxiv.json` に保存する
+  - 一般ニュース（NHK など）は出さない（2026-11-08 持ち主の判断）。理由：日本語ニュースの RSS はどれもブラウザから直接読めず、
+    集めて公開すると規約（個人利用のみ・再配信禁止）に触れるおそれがあるため。以前使っていた NHK の旧 RSS は 2026-08 で更新停止していた
 - GitHub Actions：`.github/workflows/arxiv.yml` が `scripts/fetch_arxiv.py` を動かす
   - Python の標準機能だけで書く（pip などで追加インストールしない）
   - 新着が無い日（土日など）は `arxiv.json` を書き換えない
@@ -30,7 +32,7 @@ iPad の Safari で「ホーム画面に追加」して使う、日付つきの�
 ```
 index.html             画面の骨組み
 style.css              見た目
-morning.js             朝画面（挨拶・日付・天気・ニュース）。関数を用意するだけで、呼ぶのは app.js。app.js より先に読み込む
+morning.js             朝画面（挨拶・日付・天気・arXiv）。関数を用意するだけで、呼ぶのは app.js。app.js より先に読み込む
 arxiv.json             arXiv の新着（GitHub Actions が自動で作る。手で編集しない）
 scripts/fetch_arxiv.py arXiv を読んで arxiv.json を作る（GitHub Actions 用）
 .github/workflows/arxiv.yml  毎朝 5 時に fetch_arxiv.py を動かす設定
