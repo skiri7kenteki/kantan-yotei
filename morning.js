@@ -250,7 +250,7 @@ async function loadArxiv() {
   try {
     const response = await fetchWithTimeout(ARXIV_JSON, WEATHER_TIMEOUT_MS, { cache: 'no-cache' });
     if (response.status === 404) {
-      showNewsText(listId, 'まだ届いていません（平日の朝 5 時ごろに集めます）');
+      showNewsText(listId, 'まだ届いていません（火〜土曜の朝 5 時ごろに集めます）');
       return;
     }
     if (!response.ok) throw new Error('HTTP ' + response.status);
