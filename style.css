@@ -1,30 +1,51 @@
-/* ===== 色などの共通設定（ライト／ダーク） ===== */
-:root {
-  --bg: #f4f5f8;
-  --card: #ffffff;
-  --text: #1d1f24;
-  --muted: #6b7280;
-  --line: #e2e5ea;
-  --primary: #2f6fde;
-  --primary-text: #ffffff;
-  --chip: #e8eefb;
-  --warn: #c2410c;
-  --danger: #b91c1c;
-  --radius: 14px;
+/* 見た目のルールは DESIGN.md にある。色はすべて下の変数から使う（直書きしない） */
+
+/* ===== 色（DESIGN.md の表と同じ）。どちらのテーマかは <html data-theme="..."> で決まる ===== */
+/* ::backdrop（パネルの後ろの暗幕）は古い Safari だと変数を受け継がないので、ここで一緒に指定する */
+:root,
+:root[data-theme="light"],
+:root[data-theme="light"] ::backdrop {
+  color-scheme: light; /* 日付・時刻の選択画面などもライトにする */
+  --bg: #F3F6FA;
+  --card: #FFFFFF;
+  --card-border: #E1E7EF;
+  --subpanel: #F1F4F9;
+  --button: #E8EEF6;
+  --outline: #CBD5E1;
+  --text: #0F1726;
+  --text-2: #334155;
+  --text-muted: #5B6779;
+  --text-tab: #4A5568;
+  --accent: #0074B2;
+  --on-accent: #FFFFFF;
+  --link: #0069A8;
+  --backdrop: rgba(15, 23, 38, 0.35);
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111317;
-    --card: #1c1f25;
-    --text: #eceef2;
-    --muted: #9aa1ad;
-    --line: #2c3038;
-    --primary: #5b8ff0;
-    --primary-text: #0b1020;
-    --chip: #263049;
-    --warn: #fb923c;
-    --danger: #f87171;
-  }
+:root[data-theme="dark"],
+:root[data-theme="dark"] ::backdrop {
+  color-scheme: dark;
+  --bg: #0A0E16;
+  --card: #121826;
+  --card-border: #1F2738;
+  --subpanel: #0E1420;
+  --button: #1A2233;
+  --outline: #2A3448;
+  --text: #E8ECF3;
+  --text-2: #C6CEDB;
+  --text-muted: #8E99AD;
+  --text-tab: #A3ADBF;
+  --accent: #5CC8FF;
+  --on-accent: #06121C;
+  --link: #7FD4FF;
+  --backdrop: rgba(3, 6, 12, 0.6);
+}
+
+/* テーマが切り替わる瞬間だけ、背景と文字の色をなめらかに変える（index.html の applyTheme が付け外しする） */
+.theme-changing,
+.theme-changing *,
+.theme-changing *::before,
+.theme-changing *::after {
+  transition: background-color 0.3s, color 0.3s;
 }
 
 * { box-sizing: border-box; }
@@ -32,14 +53,17 @@
 /* hidden を付けた物は、ほかの指定（display: flex など）より優先して必ず隠す */
 [hidden] { display: none !important; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+}
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
-  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 17px;
   line-height: 1.5;
   /* ホーム画面アプリのとき、画面の端（ホームバー等）を避ける */
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
@@ -48,55 +72,78 @@ body {
 .app {
   max-width: 760px;
   margin: 0 auto;
-  padding: 16px 16px 48px;
+  padding: 24px 24px 32px;
 }
 
 button, input { font: inherit; color: inherit; }
+input::placeholder { color: var(--text-muted); }
+
+/* ===== 見出しラベル（「今日の予定」など）：どの画面でも同じ形 ===== */
+.card h2,
+.list-section h2,
+.upcoming-title {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+.sub { font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--text-muted); margin-left: 6px; }
+
+/* ===== カード ===== */
+.card,
+.list-section,
+.add {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 24px;
+}
+.card { margin-top: 20px; }
+.card .note { margin: 12px 0 0; }
 
 /* ===== ボタン共通（指で押しやすい 48px 以上） ===== */
 .btn {
-  min-height: 52px;
-  padding: 0 22px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--card);
+  min-height: 48px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 14px;
+  background: var(--button);
+  color: var(--text);
   cursor: pointer;
+  font-size: 16px;
   font-weight: 600;
   touch-action: manipulation; /* ダブルタップでのズームを防ぐ */
 }
 .btn-primary {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: var(--primary-text);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 .btn:active, .chip:active { transform: scale(0.97); }
+.btn-wide { width: 100%; margin-top: 12px; }
 
 /* ===== 追加フォーム ===== */
 .add {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 12px;
-  margin-bottom: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
 }
-.add-row { display: flex; gap: 10px; align-items: center; }
-.add-options { margin-top: 10px; flex-wrap: wrap; }
+.add-row { display: flex; gap: 12px; align-items: center; }
+.add-options { margin-top: 12px; flex-wrap: wrap; }
 
-.add-title {
-  flex: 1;
-  min-width: 0;
-  min-height: 52px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg);
-  font-size: 20px;
+.add-title,
+.add-time,
+.feedback-text {
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: var(--subpanel);
+  color: var(--text);
+  font-size: 17px; /* 16px 未満だと iPad で自動ズームする */
 }
-.add-title:focus, .add-time:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+.add-title { flex: 1; min-width: 0; min-height: 48px; padding: 0 16px; }
+.add-time { min-height: 48px; padding: 0 12px; }
+.add-title:focus, .add-time:focus, .feedback-text:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
@@ -105,16 +152,18 @@ button, input { font: inherit; color: inherit; }
   align-items: center;
   min-height: 48px;
   padding: 0 16px;
-  border: 1px solid transparent;
+  border: none;
   border-radius: 999px;
-  background: var(--chip);
+  background: var(--button);
+  color: var(--text);
   cursor: pointer;
+  font-size: 16px;
   font-weight: 600;
   touch-action: manipulation;
 }
 .chip.is-selected {
-  background: var(--primary);
-  color: var(--primary-text);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 /* 「日付を選ぶ」：透明な日付入力を上に重ね、タップでカレンダーが開くようにする */
 .chip-date input {
@@ -125,59 +174,48 @@ button, input { font: inherit; color: inherit; }
   opacity: 0;
   cursor: pointer;
 }
-.add-time {
-  min-height: 48px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg);
-  font-size: 18px;
-}
 
 /* ===== お知らせ（追加しました 等） ===== */
 .message {
-  margin: 8px 0 0;
-  padding: 10px 14px;
-  border-radius: var(--radius);
-  background: var(--chip);
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--button);
   font-size: 16px;
 }
-.message.is-error { color: var(--danger); }
+.message.is-error { font-weight: 600; }
 
 /* ===== 一覧 ===== */
-.list-section { margin-top: 24px; }
-.list-section h2 {
-  margin: 0 0 8px;
-  font-size: 22px;
-}
-.sub { font-size: 15px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+.list-section { margin-top: 20px; }
 
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.empty { padding: 16px; color: var(--muted); font-size: 16px; }
+.empty { padding: 8px 0; color: var(--text-muted); font-size: 15px; }
 
+/* 予定の行：左にチェック、時刻、タイトルの順 */
 .item {
+  flex: none;
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 64px;
-  padding: 8px 10px 8px 6px;
-  border-top: 1px solid var(--line);
+  gap: 8px;
+  min-height: 56px;
+  padding: 4px;
+  background: var(--subpanel);
+  border-radius: 16px;
 }
-.item:first-child { border-top: none; }
 
-/* 完了チェック（丸ボタン） */
+/* 完了チェック（丸ボタン）。押せる範囲は 48px、見えている丸は 26px */
 .check {
+  position: relative;
   flex: none;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   display: grid;
   place-items: center;
   border: none;
@@ -187,150 +225,174 @@ button, input { font: inherit; color: inherit; }
 }
 .check::before {
   content: "";
-  width: 30px;
-  height: 30px;
-  border: 2.5px solid var(--muted);
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--text-muted);
   border-radius: 50%;
 }
 .item.is-done .check::before {
-  border-color: var(--primary);
-  background: var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 20px no-repeat;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+/* チェックの印（L 字の線を 45 度回す） */
+.item.is-done .check::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 7px;
+  border-left: 2px solid var(--on-accent);
+  border-bottom: 2px solid var(--on-accent);
+  transform: translate(-50%, -70%) rotate(-45deg);
 }
 
+.item-time {
+  flex: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
 .item-body { flex: 1; min-width: 0; }
-.item-title { overflow-wrap: anywhere; }
-.item-meta { font-size: 15px; color: var(--muted); }
-.item-meta .overdue { color: var(--warn); font-weight: 600; }
-.item.is-done .item-title { color: var(--muted); text-decoration: line-through; }
+.item-title { font-size: 17px; overflow-wrap: anywhere; }
+.item-meta { font-size: 12px; color: var(--text-muted); }
+.item-meta .overdue { color: var(--accent); font-weight: 600; }
+.item.is-done .item-title { color: var(--text-muted); text-decoration: line-through; }
+.item.is-done .item-time { color: var(--text-muted); }
 
 .delete {
   flex: none;
   min-height: 48px;
-  padding: 0 14px;
+  padding: 0 12px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: none;
-  color: var(--danger);
-  font-size: 16px;
+  color: var(--text-muted);
+  font-size: 15px;
   cursor: pointer;
   touch-action: manipulation;
 }
-.delete:active { background: var(--bg); }
+.delete:active { background: var(--button); }
 
-/* ===== バックアップ ===== */
-.backup { margin-top: 40px; }
-.note { margin: 0 0 12px; font-size: 15px; color: var(--muted); }
-.backup-buttons { display: flex; gap: 10px; }
+/* ===== バックアップ・画面の色 ===== */
+.note { margin: 0 0 12px; font-size: 15px; color: var(--text-muted); }
+.backup-buttons { display: flex; gap: 12px; }
 .backup-buttons .btn { flex: 1; max-width: 220px; }
 
 /* ===== 画面の切り替えボタン（朝／予定） ===== */
 .tabs {
   display: flex;
   gap: 4px;
+  max-width: 320px;
   padding: 4px;
-  margin-bottom: 16px;
-  background: var(--chip);
-  border-radius: var(--radius);
+  margin-bottom: 20px;
+  border: 1px solid var(--outline);
+  border-radius: 999px;
 }
 .tab {
   flex: 1;
   min-height: 48px;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
   background: none;
+  color: var(--text-tab);
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   touch-action: manipulation;
 }
 .tab.is-selected {
-  background: var(--card);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 /* ===== 朝画面 ===== */
-.morning-head { margin: 8px 4px 16px; }
-.morning-head h1 { margin: 0; font-size: 30px; }
-.morning-date { margin: 2px 0 0; font-size: 20px; color: var(--muted); }
+.morning-head { margin: 0 0 20px; }
+.morning-head h1 { margin: 0; font-size: 34px; font-weight: 700; line-height: 1.3; }
+.morning-date { margin: 0; font-size: 17px; color: var(--text-tab); }
 
-.card {
-  margin-top: 16px;
-  padding: 16px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+/* 天気 */
+.weather-main { display: flex; align-items: center; gap: 16px; }
+.weather-icon {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  color: var(--accent); /* 線の色は currentColor（＝ここの色）を使う */
 }
-.card h2 { margin: 0 0 10px; font-size: 20px; }
-.card .note { margin: 8px 0 0; }
-
-/* カードの中の予定一覧は枠を付けない */
-.list-plain { border: none; border-radius: 0; background: none; }
-.list-plain .item { padding-left: 0; padding-right: 0; }
-.list-plain .empty { padding: 8px 0; }
-
-.btn-wide { width: 100%; margin-top: 12px; }
-
-.weather-main { display: flex; align-items: center; gap: 14px; }
-.weather-icon { font-size: 48px; line-height: 1; }
-.weather-name { font-size: 22px; font-weight: 600; }
-.weather-temps { font-size: 16px; color: var(--muted); }
+.weather-big {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.weather-big-label { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: var(--text-muted); }
+.weather-name { margin-top: 12px; font-size: 17px; font-weight: 600; }
+.weather-temps { font-size: 15px; color: var(--text-2); font-variant-numeric: tabular-nums; }
 /* まとまりの中では改行しない。まとまりとまとまりの間では改行できる（inline-block にするため） */
 .nowrap { display: inline-block; white-space: nowrap; }
 
 /* 天気の欄の見出し行：左に「天気」、右に地域の選択 */
-.card-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.card-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
 .card .card-title h2 { margin: 0; }
 .place-select {
   min-height: 44px;
   max-width: 60%;
   padding: 0 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--outline);
   border-radius: 999px;
-  background: var(--chip);
+  background: var(--button);
   color: var(--text);
   font: inherit;
   font-size: 16px; /* 16px 未満だと iPad で自動ズームする */
   cursor: pointer;
 }
-.weather-error { margin: 0 0 10px; color: var(--warn); font-weight: 600; }
+#weather > .note:last-child { font-size: 12px; }
+.weather-error { margin: 0 0 12px; font-weight: 600; }
 
+/* 降水確率：朝・昼・夕方・夜の 4 つのタイル */
 .rain-periods {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 .rain-period {
   padding: 8px 4px;
   text-align: center;
-  background: var(--bg);
-  border-radius: 10px;
+  background: var(--subpanel);
+  border-radius: 14px;
 }
-.rain-label { font-size: 14px; color: var(--muted); }
-.rain-value { font-size: 20px; font-weight: 600; }
+.rain-label { font-size: 12px; color: var(--text-muted); }
+.rain-value { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
 
 .more-link {
   min-height: 44px;
   padding: 0;
   border: none;
   background: none;
-  color: var(--primary);
-  font-size: 16px;
+  color: var(--link);
+  font-size: 15px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
 }
 
 /* 朝画面の「このあと」：今日より後の予定を、1 件 1 行で小さく出す */
-.upcoming { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
-.upcoming-title { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.upcoming { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--card-border); }
+.upcoming-title { margin-bottom: 4px; }
 .upcoming-list { list-style: none; margin: 0; padding: 0; }
-.upcoming-item { display: flex; align-items: baseline; gap: 10px; padding: 2px 0; font-size: 16px; }
-.upcoming-date { flex: none; font-size: 14px; color: var(--muted); }
+.upcoming-item { display: flex; align-items: baseline; gap: 12px; padding: 2px 0; font-size: 15px; color: var(--text-2); }
+.upcoming-date { flex: none; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 /* タイトルが長いときは 1 行で切って「…」にする */
 .upcoming-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ===== 朝画面を iPad の 1 画面に収める（幅 600px 以上・朝画面のときだけ） =====
-   横向き：3 列（挨拶と天気 ｜ 今日の予定 ｜ arXiv）
+   横向き：3 列（挨拶と天気 ｜ 今日の予定とこのあと ｜ arXiv）
    縦向き：上に挨拶と天気、下に今日の予定と arXiv を左右に並べる
    入りきらない分は各枠の中で切る（予定は app.js が「ほか ○ 件」にする） */
 @media (min-width: 600px) {
@@ -342,22 +404,22 @@ button, input { font: inherit; color: inherit; }
     max-width: 1200px;
     padding-bottom: 8px;
   }
-  .is-morning .tabs { flex: none; margin-bottom: 12px; }
+  .is-morning .tabs { flex: none; }
   .is-morning .footer { flex: none; margin-top: 8px; }
 
   #screen-morning {
     flex: 1;
     min-height: 0;
     display: grid;
-    gap: 12px;
-    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: auto auto minmax(0, 1fr);
     grid-template-areas:
       "head    head"
       "weather weather"
       "today   arxiv";
   }
-  #screen-morning .morning-head { grid-area: head; margin: 0 4px; }
+  #screen-morning .morning-head { grid-area: head; margin: 0; }
   #screen-morning .card-weather { grid-area: weather; }
   #screen-morning .card-today { grid-area: today; }
   #screen-morning .card-arxiv { grid-area: arxiv; }
@@ -378,65 +440,67 @@ button, input { font: inherit; color: inherit; }
 }
 
 @media (min-width: 600px) and (orientation: landscape) {
+  /* 左右は 340px（狭い画面では中央が潰れないよう 32% まで）、中央は残り */
   #screen-morning {
-    grid-template-columns: minmax(300px, 0.9fr) 1fr 1fr;
+    grid-template-columns: min(340px, 32%) minmax(0, 1fr) min(340px, 32%);
     grid-template-rows: auto minmax(0, 1fr);
     grid-template-areas:
       "head    today arxiv"
       "weather today arxiv";
   }
   #screen-morning .card-weather { align-self: start; }
-  .morning-head h1 { font-size: 26px; }
 }
 
 /* ===== ニュース（arXiv） ===== */
 .news-list { list-style: none; margin: 0; padding: 0; }
-.news-list li { border-top: 1px solid var(--line); }
+.news-list li { border-top: 1px solid var(--card-border); }
 .news-list li:first-child { border-top: none; }
 .news-link {
   display: block;
   min-height: 48px;
-  padding: 10px 0;
+  padding: 12px 0;
   color: inherit;
   text-decoration: none;
 }
+.news-list li:first-child .news-link { padding-top: 0; }
 /* 論文のタイトルは長いので 3 行まで（それ以上は「…」） */
 .news-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-  font-size: 17px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
   overflow-wrap: anywhere;
 }
-.news-sub { display: block; font-size: 14px; color: var(--muted); }
-.news-msg { padding: 10px 0; font-size: 15px; color: var(--muted); }
-.news-error { color: var(--warn); font-weight: 600; }
-.card a { color: var(--primary); }
+.news-sub { display: block; margin-top: 2px; font-size: 12px; color: var(--text-muted); }
+.news-msg { padding: 8px 0; font-size: 15px; color: var(--text-muted); }
+.news-error { color: var(--text); font-weight: 600; }
+.card a { color: var(--link); }
 .card .news-link { color: inherit; }
 
-/* ===== いちばん下（バージョン表示など） ===== */
+/* ===== いちばん下：左にバージョン、右に枠だけの「気づきを送る」 ===== */
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-top: 32px;
-  font-size: 13px;
-  color: var(--muted);
+  font-size: 12px;
+  color: var(--text-muted);
 }
 .footer p { margin: 0; }
 
 /* ===== 気づきを送る ===== */
-/* 入口：目立たせないよう、灰色の下線つきの文字にする（押せる高さは 48px） */
 .feedback-open {
   min-height: 48px;
-  padding: 0 4px;
-  border: none;
+  padding: 0 16px;
+  border: 1px solid var(--outline);
+  border-radius: 14px;
   background: none;
-  color: var(--muted);
+  color: var(--text-2);
   font-size: 15px;
-  text-decoration: underline;
   cursor: pointer;
   touch-action: manipulation;
 }
@@ -444,25 +508,16 @@ button, input { font: inherit; color: inherit; }
 .feedback {
   width: min(560px, calc(100vw - 32px));
   margin: calc(env(safe-area-inset-top) + 32px) auto auto;
-  padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  padding: 24px;
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
   background: var(--card);
   color: var(--text);
 }
-.feedback::backdrop { background: rgba(0, 0, 0, 0.35); }
-.feedback h2 { margin: 0 0 12px; font-size: 20px; }
-.feedback-text {
-  width: 100%;
-  min-height: 52px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg);
-  font-size: 18px;
-}
-.feedback-text:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
-.feedback .note { margin: 10px 0 16px; }
-.feedback-hint { margin: 0 0 16px; font-size: 15px; font-weight: 600; color: var(--warn); }
-.feedback-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+.feedback::backdrop { background: var(--backdrop); }
+.feedback h2 { margin: 0 0 12px; font-size: 17px; font-weight: 600; }
+.feedback-text { width: 100%; min-height: 48px; padding: 0 16px; }
+.feedback .note { margin: 12px 0 16px; color: var(--text-2); }
+.feedback-hint { margin: 0 0 16px; font-size: 15px; font-weight: 600; }
+.feedback-buttons { display: flex; justify-content: flex-end; gap: 12px; }
 .feedback-send { display: inline-flex; align-items: center; text-decoration: none; }

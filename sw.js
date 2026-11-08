@@ -6,7 +6,7 @@
 
 // arxiv.json はここに入れない（まだ無い日もあり、無いとインストールが失敗するため）。
 // 一度読めば下の fetch の処理で保存されるので、オフラインでも前回分が出る
-const CACHE_NAME = 'kantan-yotei-v9';
+const CACHE_NAME = 'kantan-yotei-v10';
 const APP_FILES = [
   './',
   './index.html',

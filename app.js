@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.9';                 // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '2.0';                // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -189,10 +189,6 @@ function createItemEl(item, today) {
   } else if (item.date !== today) {
     meta.append(formatDate(item.date));
   }
-  if (item.time) {
-    if (meta.childNodes.length) meta.append('　');
-    meta.append(item.time);
-  }
   if (meta.childNodes.length) body.append(meta);
 
   const del = document.createElement('button');
@@ -200,7 +196,15 @@ function createItemEl(item, today) {
   del.className = 'delete';
   del.textContent = '削除';
 
-  li.append(check, body, del);
+  li.append(check);
+  // 時刻はチェックとタイトルの間に出す（時刻なしの予定には何も出さない）
+  if (item.time) {
+    const time = document.createElement('span');
+    time.className = 'item-time';
+    time.textContent = item.time;
+    li.append(time);
+  }
+  li.append(body, del);
   return li;
 }
 
@@ -548,6 +552,27 @@ feedbackSend.addEventListener('click', (event) => {
   setTimeout(() => feedbackDialog.close(), 0); // リンクが開くのを邪魔しないよう、この処理の後で閉じる
 });
 
+// ===== 画面の色（自動／ライト／ダーク） =====
+// 色を決める処理（applyTheme など）は index.html の <head> にある。ここは設定のボタンだけ
+const themeChips = document.querySelectorAll('.chip[data-theme-mode]');
+
+function showThemeSetting() {
+  const current = themeSetting();
+  for (const chip of themeChips) {
+    const selected = chip.dataset.themeMode === current;
+    chip.classList.toggle('is-selected', selected);
+    chip.setAttribute('aria-pressed', String(selected));
+  }
+}
+
+for (const chip of themeChips) {
+  chip.addEventListener('click', () => {
+    saveSettings({ ...loadSettings(), theme: chip.dataset.themeMode });
+    applyTheme();
+    showThemeSetting();
+  });
+}
+
 // ===== 日付が変わったら表示を更新（アプリを開きっぱなしにしていた場合） =====
 // goMorning：アプリに戻ってきたときは朝画面に戻す（操作中に勝手に切り替わらないよう、時間の経過だけでは戻さない）
 function refreshIfDayChanged(goMorning) {
@@ -572,6 +597,7 @@ render();
 showScreen('morning');
 renderMorningHead();
 setupPlaceSelect();
+showThemeSetting();
 loadMorningData(); // 天気・ニュース。失敗しても各欄に「取得できませんでした」と出るだけで、ほかは普通に動く
 document.getElementById('version').textContent = `かんたん予定 バージョン ${APP_VERSION}`;
 

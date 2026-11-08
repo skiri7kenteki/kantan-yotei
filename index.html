@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>かんたん予定</title>
-  <meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+  <!-- テーマに合わせて下のスクリプトが書き換える -->
+  <meta name="theme-color" content="#F3F6FA">
   <!-- ホーム画面に追加したときの設定 -->
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -20,6 +20,53 @@
   <link rel="apple-touch-startup-image" href="./icons/startup-2360x1640.png"
         media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
   <link rel="stylesheet" href="./style.css">
+  <!-- テーマ（ライト／ダーク）：画面が出る前に色を決めるため、ここに直接書く（後ろの js を待つと一瞬違う色が見える） -->
+  <script>
+    'use strict';
+
+    // 設定の保存場所。予定データ（kantan-yotei.v1）とは別で、バックアップにも入らない
+    const SETTINGS_KEY = 'kantan-yotei.settings';
+
+    function loadSettings() {
+      try {
+        const data = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+        return data && typeof data === 'object' ? data : {};
+      } catch (err) {
+        return {};
+      }
+    }
+
+    // 5:00〜11:59 はライト、それ以外はダーク
+    function themeForHour(hour) {
+      return hour >= 5 && hour < 12 ? 'light' : 'dark';
+    }
+
+    // 設定の「自動／ライト／ダーク」。保存がない・読めないときは自動
+    function themeSetting() {
+      const theme = loadSettings().theme;
+      return theme === 'light' || theme === 'dark' ? theme : 'auto';
+    }
+
+    function applyTheme() {
+      const setting = themeSetting();
+      const theme = setting === 'auto' ? themeForHour(new Date().getHours()) : setting;
+      const root = document.documentElement;
+      if (root.dataset.theme === theme) return;
+      // 起動時はすぐその色にする。途中で変わるときだけ 0.3 秒かけて変える（style.css の .theme-changing）
+      if (root.dataset.theme) {
+        root.classList.add('theme-changing');
+        setTimeout(() => root.classList.remove('theme-changing'), 400);
+      }
+      root.dataset.theme = theme;
+      // ブラウザの上の帯の色も背景に合わせる（色は style.css の --bg から読む）
+      const background = getComputedStyle(root).getPropertyValue('--bg').trim();
+      if (background) document.querySelector('meta[name="theme-color"]').content = background;
+    }
+
+    applyTheme();
+    document.addEventListener('visibilitychange', applyTheme); // アプリに戻ってきたとき
+    setInterval(applyTheme, 60 * 1000);                        // 開きっぱなしでも 1 分ごとに確かめる
+  </script>
 </head>
 <body>
   <main class="app">
@@ -49,7 +96,7 @@
 
       <section class="card card-today">
         <h2>今日の予定</h2>
-        <ul id="list-morning" class="list list-plain"></ul>
+        <ul id="list-morning" class="list"></ul>
         <!-- 枠に入りきらない予定があるときだけ出る（app.js の fitMorningList） -->
         <button type="button" id="morning-more" class="more-link" hidden></button>
         <!-- このあと：今日より後の未完了の予定を近い順に数件（見るだけ。操作は予定画面で）。無いときは出ない -->
@@ -114,6 +161,17 @@
         <button type="button" id="import" class="btn">読み込み</button>
       </div>
       <input id="import-file" type="file" accept=".json,application/json" hidden>
+    </section>
+
+    <!-- 画面の色：この端末の設定として保存する（予定データには入らない） -->
+    <section class="list-section">
+      <h2>画面の色</h2>
+      <p class="note">「自動」は、朝 5 時から昼 12 時まではライト、それ以外はダークになります。</p>
+      <div class="chips" role="group" aria-label="画面の色">
+        <button type="button" class="chip" data-theme-mode="auto">自動</button>
+        <button type="button" class="chip" data-theme-mode="light">ライト</button>
+        <button type="button" class="chip" data-theme-mode="dark">ダーク</button>
+      </div>
     </section>
     </div>
 

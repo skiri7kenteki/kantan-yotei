@@ -23,18 +23,7 @@ const WEATHER_PLACES = [
   ['宮崎県', 31.91, 131.42], ['鹿児島県', 31.56, 130.56], ['沖縄県', 26.21, 127.68],
 ].map(([name, latitude, longitude]) => ({ name, latitude, longitude }));
 
-// 予定データ（kantan-yotei.v1）とは別の場所に保存する設定
-const SETTINGS_KEY = 'kantan-yotei.settings';
-
-function loadSettings() {
-  try {
-    const data = JSON.parse(localStorage.getItem(SETTINGS_KEY));
-    return data && typeof data === 'object' ? data : {};
-  } catch (err) {
-    return {};
-  }
-}
-
+// 設定の保存（SETTINGS_KEY と loadSettings は、テーマで先に使うので index.html の <head> にある）
 function saveSettings(settings) {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
