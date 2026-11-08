@@ -220,6 +220,73 @@ button, input { font: inherit; color: inherit; }
 .backup-buttons { display: flex; gap: 10px; }
 .backup-buttons .btn { flex: 1; max-width: 220px; }
 
+/* ===== 画面の切り替えボタン（朝／予定） ===== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 16px;
+  background: var(--chip);
+  border-radius: var(--radius);
+}
+.tab {
+  flex: 1;
+  min-height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.tab.is-selected {
+  background: var(--card);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== 朝画面 ===== */
+.morning-head { margin: 8px 4px 16px; }
+.morning-head h1 { margin: 0; font-size: 30px; }
+.morning-date { margin: 2px 0 0; font-size: 20px; color: var(--muted); }
+
+.card {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.card h2 { margin: 0 0 10px; font-size: 20px; }
+.card .note { margin: 8px 0 0; }
+
+/* カードの中の予定一覧は枠を付けない */
+.list-plain { border: none; border-radius: 0; background: none; }
+.list-plain .item { padding-left: 0; padding-right: 0; }
+.list-plain .empty { padding: 8px 0; }
+
+.btn-wide { width: 100%; margin-top: 12px; }
+
+.weather-main { display: flex; align-items: center; gap: 14px; }
+.weather-icon { font-size: 48px; line-height: 1; }
+.weather-name { font-size: 22px; font-weight: 600; }
+.weather-temps { font-size: 16px; color: var(--muted); }
+.weather-error { margin: 0 0 10px; color: var(--warn); font-weight: 600; }
+
+.rain-periods {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+.rain-period {
+  padding: 8px 4px;
+  text-align: center;
+  background: var(--bg);
+  border-radius: 10px;
+}
+.rain-label { font-size: 14px; color: var(--muted); }
+.rain-value { font-size: 20px; font-weight: 600; }
+
 /* ===== いちばん下（バージョン表示など） ===== */
 .footer { margin-top: 32px; font-size: 13px; color: var(--muted); }
 .footer p { margin: 0; }

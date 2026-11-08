@@ -23,6 +23,41 @@
 </head>
 <body>
   <main class="app">
+    <!-- 画面の切り替え：朝（開いたとき最初に出る）／予定 -->
+    <nav class="tabs" aria-label="画面の切り替え">
+      <button type="button" class="tab" data-screen="morning">朝</button>
+      <button type="button" class="tab" data-screen="list">予定</button>
+    </nav>
+
+    <p id="message" class="message" role="status" hidden></p>
+
+    <!-- ===== 朝画面：挨拶・天気・今日の予定・ニュース ===== -->
+    <div id="screen-morning" class="screen">
+      <header class="morning-head">
+        <h1 id="greeting"></h1>
+        <p id="morning-date" class="morning-date"></p>
+      </header>
+
+      <section class="card">
+        <h2>天気 <span id="weather-place" class="sub"></span></h2>
+        <div id="weather"></div>
+      </section>
+
+      <section class="card">
+        <h2>今日の予定</h2>
+        <ul id="list-morning" class="list list-plain"></ul>
+        <button type="button" id="go-list" class="btn btn-wide">予定を追加・一覧を見る →</button>
+      </section>
+
+      <!-- ニュースは次の版で、GitHub Actions が毎朝集めた news.json を読んで表示する予定 -->
+      <section class="card" id="news">
+        <h2>ニュース</h2>
+        <p class="note">準備中です。次の版で、毎朝自動で集めたニュースをここに表示します。</p>
+      </section>
+    </div>
+
+    <!-- ===== 予定画面（これまでの画面） ===== -->
+    <div id="screen-list" class="screen" hidden>
     <!-- 追加フォーム：タイトルを打って Enter（または「追加」）で完了 -->
     <form id="add-form" class="add" autocomplete="off">
       <div class="add-row">
@@ -42,8 +77,6 @@
         <input id="time" class="add-time" type="time" hidden aria-label="時刻">
       </div>
     </form>
-
-    <p id="message" class="message" role="status" hidden></p>
 
     <section class="list-section">
       <h2>今日 <span id="today-label" class="sub"></span></h2>
@@ -70,12 +103,15 @@
       </div>
       <input id="import-file" type="file" accept=".json,application/json" hidden>
     </section>
+    </div>
 
     <footer class="footer">
       <p id="version"></p>
     </footer>
   </main>
 
+  <!-- morning.js は関数を用意するだけ。実際に動かすのは app.js（起動時に呼ぶ） -->
+  <script src="./morning.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

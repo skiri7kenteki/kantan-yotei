@@ -4,11 +4,12 @@
 // 方針は「ネット優先」：つながっていれば最新版を取りに行き、だめなら保存しておいた版を使う
 // ファイルを増やした・減らしたときは APP_FILES を直し、CACHE_NAME の番号を上げる
 
-const CACHE_NAME = 'kantan-yotei-v2';
+const CACHE_NAME = 'kantan-yotei-v3';
 const APP_FILES = [
   './',
   './index.html',
   './style.css',
+  './morning.js',
   './app.js',
   './manifest.webmanifest',
   './icons/icon-192.png',

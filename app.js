@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.2';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.3';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -24,6 +24,12 @@ const todayLabel = document.getElementById('today-label');
 const listToday = document.getElementById('list-today');
 const listWeek = document.getElementById('list-week');
 const listLater = document.getElementById('list-later');
+const listMorning = document.getElementById('list-morning'); // 朝画面の「今日の予定」
+const tabs = document.querySelectorAll('.tab[data-screen]');
+const screens = {
+  morning: document.getElementById('screen-morning'),
+  list: document.getElementById('screen-list'),
+};
 const exportButton = document.getElementById('export');
 const importButton = document.getElementById('import');
 const importFile = document.getElementById('import-file');
@@ -221,9 +227,11 @@ function render() {
   const week = items.filter(i => i.date > today && i.date <= weekEnd);
   const later = items.filter(i => i.date > weekEnd);
 
-  renderList(listToday, [...sortItems(overdue), ...sortItems(todays)], today, '今日の予定はありません');
+  const todayList = [...sortItems(overdue), ...sortItems(todays)];
+  renderList(listToday, todayList, today, '今日の予定はありません');
   renderList(listWeek, sortItems(week), today, '予定はありません');
   renderList(listLater, sortItems(later), today, '予定はありません');
+  renderList(listMorning, todayList, today, '今日の予定はありません'); // 朝画面にも同じものを出す
 }
 
 // ===== 予定の追加・完了・削除 =====
@@ -259,7 +267,21 @@ function onListClick(event) {
   if (button.classList.contains('check')) toggleDone(li.dataset.id);
   if (button.classList.contains('delete')) deleteItem(li.dataset.id);
 }
-for (const ul of [listToday, listWeek, listLater]) ul.addEventListener('click', onListClick);
+for (const ul of [listToday, listWeek, listLater, listMorning]) ul.addEventListener('click', onListClick);
+
+// ===== 画面の切り替え（朝／予定） =====
+function showScreen(name) {
+  for (const key in screens) screens[key].hidden = key !== name;
+  for (const tab of tabs) {
+    const selected = tab.dataset.screen === name;
+    tab.classList.toggle('is-selected', selected);
+    tab.setAttribute('aria-pressed', String(selected));
+  }
+  window.scrollTo(0, 0);
+}
+
+for (const tab of tabs) tab.addEventListener('click', () => showScreen(tab.dataset.screen));
+document.getElementById('go-list').addEventListener('click', () => showScreen('list'));
 
 // ===== 追加フォーム =====
 
@@ -404,18 +426,29 @@ importFile.addEventListener('change', async () => {
 });
 
 // ===== 日付が変わったら表示を更新（アプリを開きっぱなしにしていた場合） =====
-function refreshIfDayChanged() {
-  if (todayStr() !== renderedToday) render();
+// goMorning：アプリに戻ってきたときは朝画面に戻す（操作中に勝手に切り替わらないよう、時間の経過だけでは戻さない）
+function refreshIfDayChanged(goMorning) {
+  if (todayStr() === renderedToday) return;
+  render();
+  renderMorningHead();
+  loadWeather();
+  if (goMorning) showScreen('morning');
 }
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') refreshIfDayChanged();
+  if (document.visibilityState !== 'visible') return;
+  renderMorningHead(); // 挨拶は時間帯で変わるので毎回更新
+  refreshIfDayChanged(true);
+  refreshWeatherIfOld();
 });
-setInterval(refreshIfDayChanged, 60 * 1000);
+setInterval(() => refreshIfDayChanged(false), 60 * 1000);
 
 // ===== 起動 =====
 items = loadItems();
 setDayMode('today');
 render();
+showScreen('morning');
+renderMorningHead();
+loadWeather(); // 失敗しても天気欄に「取得できませんでした」と出るだけで、ほかは普通に動く
 document.getElementById('version').textContent = `かんたん予定 バージョン ${APP_VERSION}`;
 
 // service worker の登録（オフラインで開けるようにする）。
