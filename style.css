@@ -320,6 +320,15 @@ button, input { font: inherit; color: inherit; }
   cursor: pointer;
 }
 
+/* 朝画面の「このあと」：今日より後の予定を、1 件 1 行で小さく出す */
+.upcoming { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+.upcoming-title { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.upcoming-list { list-style: none; margin: 0; padding: 0; }
+.upcoming-item { display: flex; align-items: baseline; gap: 10px; padding: 2px 0; font-size: 16px; }
+.upcoming-date { flex: none; font-size: 14px; color: var(--muted); }
+/* タイトルが長いときは 1 行で切って「…」にする */
+.upcoming-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 /* ===== 朝画面を iPad の 1 画面に収める（幅 600px 以上・朝画面のときだけ） =====
    横向き：3 列（挨拶と天気 ｜ 今日の予定 ｜ arXiv）
    縦向き：上に挨拶と天気、下に今日の予定と arXiv を左右に並べる
@@ -363,6 +372,7 @@ button, input { font: inherit; color: inherit; }
   /* 予定の一覧は残りの高さいっぱい。はみ出しは app.js が「ほか ○ 件」にする */
   #screen-morning #list-morning { flex: 1 1 auto; min-height: 0; overflow: hidden; }
   #screen-morning .more-link,
+  #screen-morning .upcoming,
   #screen-morning .btn-wide { flex: none; }
   #screen-morning .news-list { flex: 0 1 auto; min-height: 0; overflow: hidden; }
 }

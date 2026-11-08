@@ -1,10 +1,11 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.8';                  // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.9';                 // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
+const UPCOMING_COUNT = 3;                     // 朝画面の「このあと」に出す予定の最大数
 
 // iPad / iPhone かどうか（iPadOS は「Mac」と名乗るので、タッチ対応かどうかで見分ける）
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -25,6 +26,8 @@ const listToday = document.getElementById('list-today');
 const listWeek = document.getElementById('list-week');
 const listLater = document.getElementById('list-later');
 const listMorning = document.getElementById('list-morning'); // 朝画面の「今日の予定」
+const upcomingBox = document.getElementById('upcoming');     // 朝画面の「このあと」の枠
+const listUpcoming = document.getElementById('list-upcoming');
 const tabs = document.querySelectorAll('.tab[data-screen]');
 const screens = {
   morning: document.getElementById('screen-morning'),
@@ -213,6 +216,30 @@ function renderList(ul, list, today, emptyText) {
   for (const item of list) ul.append(createItemEl(item, today));
 }
 
+// 朝画面の「このあと」の 1 行（見るだけなのでボタンは付けない）
+function createUpcomingEl(item) {
+  const li = document.createElement('li');
+  li.className = 'upcoming-item';
+
+  const date = document.createElement('span');
+  date.className = 'upcoming-date';
+  date.textContent = item.time ? `${formatDate(item.date)} ${item.time}` : formatDate(item.date);
+
+  const title = document.createElement('span');
+  title.className = 'upcoming-text';
+  title.textContent = item.title; // innerHTML は使わない（CLAUDE.md 参照）
+
+  li.append(date, title);
+  return li;
+}
+
+// 今日より後の未完了の予定を、近い順に UPCOMING_COUNT 件まで出す（無ければ枠ごと隠す）
+function renderUpcoming(today) {
+  const next = sortItems(items.filter(i => i.date > today && !i.done)).slice(0, UPCOMING_COUNT);
+  listUpcoming.replaceChildren(...next.map(createUpcomingEl));
+  upcomingBox.hidden = next.length === 0;
+}
+
 let renderedToday = '';
 
 function render() {
@@ -232,6 +259,7 @@ function render() {
   renderList(listWeek, sortItems(week), today, '予定はありません');
   renderList(listLater, sortItems(later), today, '予定はありません');
   renderList(listMorning, todayList, today, '今日の予定はありません'); // 朝画面にも同じものを出す
+  renderUpcoming(today); // fitMorningList が高さを測る前に出しておく
   fitMorningList();
 }
 

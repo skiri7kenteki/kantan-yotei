@@ -52,6 +52,11 @@
         <ul id="list-morning" class="list list-plain"></ul>
         <!-- 枠に入りきらない予定があるときだけ出る（app.js の fitMorningList） -->
         <button type="button" id="morning-more" class="more-link" hidden></button>
+        <!-- このあと：今日より後の未完了の予定を近い順に数件（見るだけ。操作は予定画面で）。無いときは出ない -->
+        <div id="upcoming" class="upcoming" hidden>
+          <h3 class="upcoming-title">このあと</h3>
+          <ul id="list-upcoming" class="upcoming-list"></ul>
+        </div>
         <button type="button" id="go-list" class="btn btn-wide">予定を追加・一覧を見る →</button>
       </section>
 
