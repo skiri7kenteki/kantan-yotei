@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.5.1';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.6';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -478,6 +478,7 @@ setDayMode('today');
 render();
 showScreen('morning');
 renderMorningHead();
+setupPlaceSelect();
 loadMorningData(); // 天気・ニュース。失敗しても各欄に「取得できませんでした」と出るだけで、ほかは普通に動く
 document.getElementById('version').textContent = `かんたん予定 バージョン ${APP_VERSION}`;
 

@@ -273,7 +273,24 @@ button, input { font: inherit; color: inherit; }
 .weather-icon { font-size: 48px; line-height: 1; }
 .weather-name { font-size: 22px; font-weight: 600; }
 .weather-temps { font-size: 16px; color: var(--muted); }
-.nowrap { white-space: nowrap; }
+/* まとまりの中では改行しない。まとまりとまとまりの間では改行できる（inline-block にするため） */
+.nowrap { display: inline-block; white-space: nowrap; }
+
+/* 天気の欄の見出し行：左に「天気」、右に地域の選択 */
+.card-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.card .card-title h2 { margin: 0; }
+.place-select {
+  min-height: 44px;
+  max-width: 60%;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--chip);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* 16px 未満だと iPad で自動ズームする */
+  cursor: pointer;
+}
 .weather-error { margin: 0 0 10px; color: var(--warn); font-weight: 600; }
 
 .rain-periods {

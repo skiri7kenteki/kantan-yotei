@@ -39,7 +39,11 @@
       </header>
 
       <section class="card card-weather">
-        <h2>天気 <span id="weather-place" class="sub"></span></h2>
+        <div class="card-title">
+          <h2>天気</h2>
+          <!-- 地域は iPad の中だけに保存（選択肢は morning.js の WEATHER_PLACES） -->
+          <select id="weather-place" class="place-select" aria-label="天気の地域"></select>
+        </div>
         <div id="weather"></div>
       </section>
 

@@ -5,12 +5,57 @@
 // （formatDate など app.js の関数も使うが、呼ばれる時点では app.js が読み込み済み）
 
 // ===== 天気の設定 =====
-// Open-Meteo（無料・登録不要・API キー不要）。外に送るのはこの緯度・経度だけで、予定のデータは送らない
-const WEATHER_PLACE = { name: '東京', latitude: 35.69, longitude: 139.69 };
-const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast' +
-  `?latitude=${WEATHER_PLACE.latitude}&longitude=${WEATHER_PLACE.longitude}` +
-  '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
-  '&hourly=precipitation_probability&timezone=Asia%2FTokyo&forecast_days=1';
+// Open-Meteo（無料・登録不要・API キー不要）。外に送るのは選んだ地域の緯度・経度だけで、予定のデータは送らない
+// 地域は持ち主が iPad で選び、端末の中（SETTINGS_KEY）にだけ保存する。公開されるのはこの一覧だけ
+// 座標は都道府県庁所在地あたり（小数 2 桁＝約 1km の粗さ）
+const WEATHER_PLACES = [
+  ['北海道', 43.06, 141.35], ['青森県', 40.82, 140.74], ['岩手県', 39.70, 141.15], ['宮城県', 38.27, 140.87],
+  ['秋田県', 39.72, 140.10], ['山形県', 38.24, 140.36], ['福島県', 37.75, 140.47], ['茨城県', 36.34, 140.45],
+  ['栃木県', 36.57, 139.88], ['群馬県', 36.39, 139.06], ['埼玉県', 35.86, 139.65], ['千葉県', 35.61, 140.12],
+  ['東京都', 35.69, 139.69], ['神奈川県', 35.45, 139.64], ['新潟県', 37.90, 139.02], ['富山県', 36.70, 137.21],
+  ['石川県', 36.59, 136.63], ['福井県', 36.07, 136.22], ['山梨県', 35.66, 138.57], ['長野県', 36.65, 138.18],
+  ['岐阜県', 35.39, 136.72], ['静岡県', 34.98, 138.38], ['愛知県', 35.18, 136.91], ['三重県', 34.73, 136.51],
+  ['滋賀県', 35.00, 135.87], ['京都府', 35.02, 135.76], ['大阪府', 34.69, 135.52], ['兵庫県', 34.69, 135.18],
+  ['奈良県', 34.69, 135.83], ['和歌山県', 34.23, 135.17], ['鳥取県', 35.50, 134.24], ['島根県', 35.47, 133.05],
+  ['岡山県', 34.66, 133.93], ['広島県', 34.40, 132.46], ['山口県', 34.19, 131.47], ['徳島県', 34.07, 134.56],
+  ['香川県', 34.34, 134.04], ['愛媛県', 33.84, 132.77], ['高知県', 33.56, 133.53], ['福岡県', 33.61, 130.42],
+  ['佐賀県', 33.25, 130.30], ['長崎県', 32.74, 129.87], ['熊本県', 32.79, 130.74], ['大分県', 33.24, 131.61],
+  ['宮崎県', 31.91, 131.42], ['鹿児島県', 31.56, 130.56], ['沖縄県', 26.21, 127.68],
+].map(([name, latitude, longitude]) => ({ name, latitude, longitude }));
+
+// 予定データ（kantan-yotei.v1）とは別の場所に保存する設定
+const SETTINGS_KEY = 'kantan-yotei.settings';
+
+function loadSettings() {
+  try {
+    const data = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    return data && typeof data === 'object' ? data : {};
+  } catch (err) {
+    return {};
+  }
+}
+
+function saveSettings(settings) {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch (err) {
+    showMessage('設定を保存できませんでした', true);
+  }
+}
+
+// 選んである地域（まだ選んでいなければ null）
+function currentPlace() {
+  const name = loadSettings().weatherPlace;
+  return WEATHER_PLACES.find(p => p.name === name) || null;
+}
+
+function weatherUrl(place) {
+  return 'https://api.open-meteo.com/v1/forecast' +
+    `?latitude=${place.latitude}&longitude=${place.longitude}` +
+    '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
+    '&hourly=precipitation_probability&timezone=Asia%2FTokyo&forecast_days=1';
+}
+
 const WEATHER_TIMEOUT_MS = 8000;          // これ以上返事がなければ「取得できませんでした」
 const WEATHER_REFRESH_MS = 60 * 60 * 1000; // アプリに戻ってきたとき、1 時間以上たっていたら天気・ニュースを取り直す
 
@@ -60,7 +105,29 @@ function formatLongDate(s) {
 function renderMorningHead() {
   document.getElementById('greeting').textContent = greetingFor(new Date().getHours());
   document.getElementById('morning-date').textContent = formatLongDate(todayStr());
-  document.getElementById('weather-place').textContent = WEATHER_PLACE.name;
+}
+
+// ===== 地域の選択（天気の欄の右上） =====
+const placeSelect = () => document.getElementById('weather-place');
+
+function setupPlaceSelect() {
+  const select = placeSelect();
+  const first = document.createElement('option');
+  first.value = '';
+  first.textContent = '地域を選ぶ';
+  select.append(first);
+  for (const p of WEATHER_PLACES) {
+    const option = document.createElement('option');
+    option.value = p.name;
+    option.textContent = p.name;
+    select.append(option);
+  }
+  const place = currentPlace();
+  select.value = place ? place.name : '';
+  select.addEventListener('change', () => {
+    saveSettings({ ...loadSettings(), weatherPlace: select.value });
+    loadWeather();
+  });
 }
 
 // ===== 朝画面のネットの情報（天気・ニュース）をまとめて取りに行く =====
@@ -108,15 +175,25 @@ function summarizeWeather(data) {
   };
 }
 
+let weatherRequestId = 0; // 地域を続けて切り替えたとき、古い返事で上書きしないための番号
+
 async function loadWeather() {
+  const requestId = ++weatherRequestId;
+  const place = currentPlace();
+  if (!place) {
+    // 地域を選ぶまでは、どこにも問い合わせない
+    showWeatherText('右上の「地域を選ぶ」から、天気を出す地域を選んでください');
+    return;
+  }
   showWeatherText('天気を取得しています…');
   try {
-    const response = await fetchWithTimeout(WEATHER_URL, WEATHER_TIMEOUT_MS);
+    const response = await fetchWithTimeout(weatherUrl(place), WEATHER_TIMEOUT_MS);
     if (!response.ok) throw new Error('HTTP ' + response.status);
-    renderWeather(summarizeWeather(await response.json()));
+    const weather = summarizeWeather(await response.json());
+    if (requestId === weatherRequestId) renderWeather(weather);
   } catch (err) {
     // オフライン・時間切れ・形式違いなど。予定の表示には影響させない
-    showWeatherError();
+    if (requestId === weatherRequestId) showWeatherError();
   }
 }
 
