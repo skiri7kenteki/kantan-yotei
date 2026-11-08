@@ -15,6 +15,11 @@ iPad の Safari で「ホーム画面に追加」して使う、日付つきの�
 - v1 で**やらない**こと：繰り返し予定、編集、通知、月カレンダー、ログイン・同期
   - 追加したくなったら、まず PROGRESS.md の「次にやること」に書いて持ち主と相談する
 
+## 見た目
+- **見た目は DESIGN.md に従う**（色・文字・余白・部品・テーマの切り替え）。色は `style.css` の CSS 変数から使い、直書きしない
+- テーマを決める処理は `index.html` の `<head>` に直接書いている（画面が出る前に色を決めるため）。設定「自動／ライト／ダーク」は予定画面の下にあり、`kantan-yotei.settings` に保存する
+- 押せるものの高さは、DESIGN.md の 44px より厳しい下の「48px 以上」を守る
+
 ## 使う技術
 - HTML / CSS / JavaScript のみ（素の JS。`<script>` で直接読み込む）
 - データ保存：localStorage（予定はキー `kantan-yotei.v1`、設定はキー `kantan-yotei.settings`）
@@ -42,6 +47,7 @@ sw.js                  service worker（オフライン対応）
 icons/                 icon-192.png, icon-512.png, apple-touch-icon.png(180px),
                        startup-1640x2360.png / startup-2360x1640.png（iPad の起動画面。背景色 #f4f5f8 の無地）
 CLAUDE.md              このファイル
+DESIGN.md              見た目のルール
 PROGRESS.md            進捗メモ
 ```
 ファイルは増やさない方針。増やすときは理由を PROGRESS.md に書く。
