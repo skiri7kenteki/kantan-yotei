@@ -351,7 +351,7 @@ input::placeholder { color: var(--text-muted); }
   font-size: 16px; /* 16px 未満だと iPad で自動ズームする */
   cursor: pointer;
 }
-#weather > .note:last-child { font-size: 12px; }
+.weather-detail .note { font-size: 12px; }
 .weather-error { margin: 0 0 12px; font-weight: 600; }
 
 /* 降水確率：朝・昼・夕方・夜の 4 つのタイル */
@@ -449,6 +449,14 @@ input::placeholder { color: var(--text-muted); }
       "weather today arxiv";
   }
   #screen-morning .card-weather { align-self: start; }
+}
+
+/* 縦向きは天気の幅に余裕があるので左右に並べ、そのぶんの高さを予定に回す */
+@media (min-width: 600px) and (orientation: portrait) {
+  .weather-body { display: flex; align-items: center; gap: 32px; }
+  .weather-summary { flex: none; }
+  .weather-detail { flex: 1; min-width: 0; }
+  .weather-detail .rain-periods { margin-top: 0; }
 }
 
 /* ===== ニュース（arXiv） ===== */

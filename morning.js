@@ -62,20 +62,58 @@ const RAIN_PERIODS = [
   { label: '夜', start: 18, end: 24 },
 ];
 
-// 天気コード（WMO という国際的な決まり）→ マークと日本語
+// 天気コード（WMO という国際的な決まり）→ アイコンの種類と日本語
 function weatherLabel(code) {
-  if (code === 0) return { icon: '☀️', text: '晴れ' };
-  if (code === 1) return { icon: '🌤️', text: 'おおむね晴れ' };
-  if (code === 2) return { icon: '⛅', text: '晴れ時々くもり' };
-  if (code === 3) return { icon: '☁️', text: 'くもり' };
-  if (code === 45 || code === 48) return { icon: '🌫️', text: '霧' };
-  if (code >= 51 && code <= 57) return { icon: '🌦️', text: '霧雨' };
-  if (code >= 61 && code <= 67) return { icon: '🌧️', text: '雨' };
-  if (code >= 71 && code <= 77) return { icon: '🌨️', text: '雪' };
-  if (code >= 80 && code <= 82) return { icon: '🌦️', text: 'にわか雨' };
-  if (code === 85 || code === 86) return { icon: '🌨️', text: 'にわか雪' };
-  if (code >= 95) return { icon: '⛈️', text: '雷雨' };
-  return { icon: '🌡️', text: '—' };
+  if (code === 0) return { icon: 'sun', text: '晴れ' };
+  if (code === 1) return { icon: 'partly', text: 'おおむね晴れ' };
+  if (code === 2) return { icon: 'partly', text: '晴れ時々くもり' };
+  if (code === 3) return { icon: 'cloud', text: 'くもり' };
+  if (code === 45 || code === 48) return { icon: 'fog', text: '霧' };
+  if (code >= 51 && code <= 57) return { icon: 'drizzle', text: '霧雨' };
+  if (code >= 61 && code <= 67) return { icon: 'rain', text: '雨' };
+  if (code >= 71 && code <= 77) return { icon: 'snow', text: '雪' };
+  if (code >= 80 && code <= 82) return { icon: 'rain', text: 'にわか雨' };
+  if (code === 85 || code === 86) return { icon: 'snow', text: 'にわか雪' };
+  if (code >= 95) return { icon: 'thunder', text: '雷雨' };
+  return { icon: null, text: '—' }; // 知らないコードのときは、違う天気の絵を出さない
+}
+
+// ===== 天気のアイコン（線画の SVG）=====
+// 24×24 のマス目に描いた線の一覧。下の weatherIconEl が線の太さ 1.5 で描く
+const CLOUD_UPPER = 'M7 15h10a3.5 3.5 0 0 0 .5-6.96 5.5 5.5 0 0 0-10.6-1A4 4 0 0 0 7 15z'; // 雨や雪を下に描くための、上に寄せた雲
+const WEATHER_ICONS = {
+  sun: ['M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z', 'M12 2.5v2', 'M12 19.5v2', 'M2.5 12h2', 'M19.5 12h2',
+    'M5.3 5.3l1.4 1.4', 'M17.3 17.3l1.4 1.4', 'M5.3 18.7l1.4-1.4', 'M17.3 6.7l1.4-1.4'],
+  partly: ['M10.5 7.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z', 'M7.5 2v1.5', 'M2 7.5h1.5', 'M3.6 3.6l1.1 1.1', 'M11.4 3.6l-1.1 1.1', 'M3.6 11.4l1.1-1.1',
+    'M9 20h8.5a3.5 3.5 0 0 0 .5-6.96 5 5 0 0 0-9.6-.9A3.9 3.9 0 0 0 9 20z'],
+  cloud: ['M7 19.5h10a4 4 0 0 0 .6-7.95 6 6 0 0 0-11.5-1.1A4.5 4.5 0 0 0 7 19.5z'],
+  fog: [CLOUD_UPPER, 'M5 18h14', 'M8 21h8'],
+  drizzle: [CLOUD_UPPER, 'M8 18.5v.01', 'M12 18.5v.01', 'M16 18.5v.01', 'M10 21.5v.01', 'M14 21.5v.01'],
+  rain: [CLOUD_UPPER, 'M8.5 17.5l-1 3.5', 'M12.5 17.5l-1 3.5', 'M16.5 17.5l-1 3.5'],
+  snow: [CLOUD_UPPER, 'M9 17.5v3.5', 'M7.5 18.4l3 1.7', 'M7.5 20.1l3-1.7', 'M15 17.5v3.5', 'M13.5 18.4l3 1.7', 'M13.5 20.1l3-1.7'],
+  thunder: [CLOUD_UPPER, 'M12.5 15l-2.5 4h4l-2.5 4'],
+};
+
+// アイコンの部品を作る（色は style.css の .weather-icon）。種類が無いときは null
+function weatherIconEl(kind) {
+  if (!WEATHER_ICONS[kind]) return null;
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('class', 'weather-icon');
+  svg.setAttribute('data-icon', kind);
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '1.5');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.setAttribute('aria-hidden', 'true'); // 天気の名前は文字でも出ているので、読み上げでは飛ばす
+  for (const d of WEATHER_ICONS[kind]) {
+    const path = document.createElementNS(SVG_NS, 'path');
+    path.setAttribute('d', d);
+    svg.append(path);
+  }
+  return svg;
 }
 
 // ===== 挨拶と日付 =====
@@ -214,11 +252,23 @@ const percent = v => (typeof v === 'number' ? `${v}%` : '—');
 function renderWeather(w) {
   const label = weatherLabel(w.code);
 
+  // アイコンと今日の最高気温（大きく出す）
   const main = document.createElement('div');
   main.className = 'weather-main';
-  const icon = document.createElement('span');
-  icon.className = 'weather-icon';
-  icon.textContent = label.icon;
+  const icon = weatherIconEl(label.icon);
+  if (icon) main.append(icon);
+  const big = document.createElement('div');
+  big.className = 'weather-big';
+  const bigLabel = document.createElement('span');
+  bigLabel.className = 'weather-big-label';
+  bigLabel.textContent = '最高';
+  const bigValue = document.createElement('span');
+  bigValue.className = 'weather-big-value';
+  bigValue.textContent = roundTemp(w.max);
+  big.append(bigLabel, bigValue);
+  main.append(big);
+
+  // 天気の名前と、最低気温・降水確率
   const text = document.createElement('div');
   const name = document.createElement('div');
   name.className = 'weather-name';
@@ -228,13 +278,12 @@ function renderWeather(w) {
   // 幅が狭いときは「降水確率」の前で改行されるよう、2 つに分けて途中で折り返さないようにする
   const tempsPart = document.createElement('span');
   tempsPart.className = 'nowrap';
-  tempsPart.textContent = `最高 ${roundTemp(w.max)} ／ 最低 ${roundTemp(w.min)} ／ `;
+  tempsPart.textContent = `最低 ${roundTemp(w.min)} ／ `;
   const rainPart = document.createElement('span');
   rainPart.className = 'nowrap';
   rainPart.textContent = `降水確率 ${percent(w.rain)}`;
   temps.append(tempsPart, rainPart);
   text.append(name, temps);
-  main.append(icon, text);
 
   // 時間ごとの降水確率
   const periods = document.createElement('div');
@@ -257,7 +306,17 @@ function renderWeather(w) {
   updated.className = 'note';
   updated.textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')} 取得`;
 
-  weatherEl().replaceChildren(main, periods, updated);
+  // 縦向きの iPad では summary と detail を左右に並べる（style.css）
+  const summary = document.createElement('div');
+  summary.className = 'weather-summary';
+  summary.append(main, text);
+  const detail = document.createElement('div');
+  detail.className = 'weather-detail';
+  detail.append(periods, updated);
+  const body = document.createElement('div');
+  body.className = 'weather-body';
+  body.append(summary, detail);
+  weatherEl().replaceChildren(body);
 }
 
 // ===== ニュース：表示の部品 =====
