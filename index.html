@@ -114,8 +114,23 @@
 
     <footer class="footer">
       <p id="version"></p>
+      <!-- 朝・予定のどちらの画面からも使える入口（中身は下の dialog） -->
+      <button type="button" id="feedback-open" class="feedback-open">気づきを送る</button>
     </footer>
   </main>
+
+  <!-- 気づきを送る：GitHub の Issue 作成画面を Safari で開く。送信は GitHub の画面で行う（app.js 参照）。
+       Enter で勝手に開かないよう、form にはしない（日本語変換の確定でも Enter を使うため） -->
+  <dialog id="feedback" class="feedback" aria-labelledby="feedback-title">
+    <h2 id="feedback-title">気づきを送る</h2>
+    <input id="feedback-text" class="feedback-text" type="text" maxlength="100" placeholder="気づいたことを一行で" enterkeyhint="done" autocomplete="off" aria-label="気づいたこと">
+    <p class="note">GitHub の Issue は公開されます。個人的な内容は書かないでください</p>
+    <p id="feedback-hint" class="feedback-hint" role="status" hidden></p>
+    <div class="feedback-buttons">
+      <button type="button" id="feedback-close" class="btn">やめる</button>
+      <a id="feedback-send" class="btn btn-primary feedback-send" href="https://github.com/skiri7kenteki/kantan-yotei/issues/new" target="_blank" rel="noopener">GitHub で送る</a>
+    </div>
+  </dialog>
 
   <!-- morning.js は関数を用意するだけ。実際に動かすのは app.js（起動時に呼ぶ） -->
   <script src="./morning.js"></script>

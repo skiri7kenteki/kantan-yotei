@@ -406,5 +406,53 @@ button, input { font: inherit; color: inherit; }
 .card .news-link { color: inherit; }
 
 /* ===== いちばん下（バージョン表示など） ===== */
-.footer { margin-top: 32px; font-size: 13px; color: var(--muted); }
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--muted);
+}
 .footer p { margin: 0; }
+
+/* ===== 気づきを送る ===== */
+/* 入口：目立たせないよう、灰色の下線つきの文字にする（押せる高さは 48px） */
+.feedback-open {
+  min-height: 48px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+/* 画面の下に置くとキーボードで隠れるので、上に寄せて出す */
+.feedback {
+  width: min(560px, calc(100vw - 32px));
+  margin: calc(env(safe-area-inset-top) + 32px) auto auto;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+}
+.feedback::backdrop { background: rgba(0, 0, 0, 0.35); }
+.feedback h2 { margin: 0 0 12px; font-size: 20px; }
+.feedback-text {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-size: 18px;
+}
+.feedback-text:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+.feedback .note { margin: 10px 0 16px; }
+.feedback-hint { margin: 0 0 16px; font-size: 15px; font-weight: 600; color: var(--warn); }
+.feedback-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+.feedback-send { display: inline-flex; align-items: center; text-decoration: none; }

@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.6';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.7';                   // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -453,6 +453,63 @@ importFile.addEventListener('change', async () => {
   const file = importFile.files[0];
   if (file) await importBackup(file);
   importFile.value = ''; // 同じファイルをもう一度選べるようにする
+});
+
+// ===== 気づきを送る（GitHub の Issue 作成画面を開く） =====
+// アプリから投稿はしない。Safari で開いた GitHub の画面で、持ち主が送信する
+// リポジトリは公開なので、自動で入れるのは画面名・バージョン・日付だけ（予定の中身や地域は入れない）
+const ISSUE_NEW_URL = 'https://github.com/skiri7kenteki/kantan-yotei/issues/new';
+const feedbackDialog = document.getElementById('feedback');
+const feedbackText = document.getElementById('feedback-text');
+const feedbackHint = document.getElementById('feedback-hint');
+const feedbackSend = document.getElementById('feedback-send');
+
+// Issue 作成画面の URL を作る（タイトルと本文の下書きを入れておく）
+function buildIssueUrl(text) {
+  const title = `【気づき】${text}`;
+  const body = [
+    `画面：${screens.morning.hidden ? '予定' : '朝'}`,
+    `アプリのバージョン：${APP_VERSION}`,
+    `日付：${todayStr()}`,
+    '',
+    'どうなってほしいか：',
+    '',
+  ].join('\n');
+  return `${ISSUE_NEW_URL}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
+function showFeedbackHint(text) {
+  feedbackHint.textContent = text;
+  feedbackHint.hidden = false;
+}
+
+function openFeedback() {
+  feedbackText.value = '';
+  feedbackHint.hidden = true;
+  feedbackDialog.showModal();
+  feedbackText.focus();
+}
+
+document.getElementById('feedback-open').addEventListener('click', openFeedback);
+document.getElementById('feedback-close').addEventListener('click', () => feedbackDialog.close());
+
+// 「GitHub で送る」はリンクなので、押した瞬間に URL を入れればそのまま Safari で開く
+feedbackSend.addEventListener('click', (event) => {
+  const text = feedbackText.value.trim();
+  if (!text) {
+    event.preventDefault();
+    showFeedbackHint('気づいたことを入力してください');
+    feedbackText.focus();
+    return;
+  }
+  // オフラインだと Safari がエラーになるので開かない（書いた文は残す）
+  if (!navigator.onLine) {
+    event.preventDefault();
+    showFeedbackHint('ネットにつながっていません。つながってからもう一度押してください');
+    return;
+  }
+  feedbackSend.href = buildIssueUrl(text);
+  setTimeout(() => feedbackDialog.close(), 0); // リンクが開くのを邪魔しないよう、この処理の後で閉じる
 });
 
 // ===== 日付が変わったら表示を更新（アプリを開きっぱなしにしていた場合） =====
