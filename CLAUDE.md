@@ -23,7 +23,8 @@ style.css              見た目
 app.js                 動き（保存・表示・追加・完了・削除・バックアップ）
 manifest.webmanifest   ホーム画面用の設定（名前・アイコン・色）
 sw.js                  service worker（オフライン対応）
-icons/                 icon-192.png, icon-512.png, apple-touch-icon.png(180px)
+icons/                 icon-192.png, icon-512.png, apple-touch-icon.png(180px),
+                       startup-1640x2360.png / startup-2360x1640.png（iPad の起動画面。背景色 #f4f5f8 の無地）
 CLAUDE.md              このファイル
 PROGRESS.md            進捗メモ
 ```

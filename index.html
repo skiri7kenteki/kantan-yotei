@@ -13,18 +13,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="かんたん予定">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- 起動画面（アプリの中身が動き出すまで iPad が表示する画像）。向きごとに画面と同じピクセル数が必要。
+       今は持ち主の iPad（820x1180 の画面・2 倍密度）用だけ。ホーム画面に追加し直すと反映される -->
+  <link rel="apple-touch-startup-image" href="./icons/startup-1640x2360.png"
+        media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="./icons/startup-2360x1640.png"
+        media="(device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
   <link rel="stylesheet" href="./style.css">
-  <script>
-    // 横画面で開いた直後に iPad が一瞬拡大表示するのを隠す（app.js が拡大の戻りを確認して表示する）
-    // 万一のため 1 秒後には必ず表示する
-    document.documentElement.classList.add('is-settling');
-    // 【一時的】拡大表示の原因調査用：いちばん最初の画面サイズを記録（app.js が表示する）
-    window.startupViewport = {
-      t: Date.now(), w: window.innerWidth, h: window.innerHeight,
-      scale: window.visualViewport ? window.visualViewport.scale : null
-    };
-    setTimeout(function () { document.documentElement.classList.remove('is-settling'); }, 1000);
-  </script>
 </head>
 <body>
   <main class="app">
@@ -78,7 +73,6 @@
 
     <footer class="footer">
       <p id="version"></p>
-      <pre id="debug" class="debug"></pre>
     </footer>
   </main>
 

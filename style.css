@@ -42,9 +42,6 @@ body {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-/* 起動直後、拡大表示が元に戻るまでは中身を隠す（背景色だけ見える） */
-.is-settling body { visibility: hidden; }
-
 .app {
   max-width: 760px;
   margin: 0 auto;
@@ -226,5 +223,3 @@ button, input { font: inherit; color: inherit; }
 /* ===== いちばん下（バージョン表示など） ===== */
 .footer { margin-top: 32px; font-size: 13px; color: var(--muted); }
 .footer p { margin: 0; }
-.debug { margin: 8px 0 0; white-space: pre-wrap; font-size: 12px; }
-.debug:empty { display: none; }

@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== 設定 =====
-const APP_VERSION = '1.1';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
+const APP_VERSION = '1.2';                    // 直したら上げる（画面の下に表示され、更新が届いたか分かる）
 const STORAGE_KEY = 'kantan-yotei.v1';        // localStorage に保存するときの名前
 const BROKEN_KEY = 'kantan-yotei.v1.broken';  // 読めなかったデータの避難先
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
@@ -412,54 +412,11 @@ document.addEventListener('visibilitychange', () => {
 });
 setInterval(refreshIfDayChanged, 60 * 1000);
 
-// ===== 起動直後の拡大表示対策 =====
-// iPad のホーム画面アプリを横向きで開くと、最初だけ縦向きの幅で作った画面が引き伸ばされ、
-// 拡大率（visualViewport.scale）が 1 より大きくなる。1 に戻ったら中身を表示する
-function revealWhenScaleSettles() {
-  const vv = window.visualViewport;
-  const show = () => document.documentElement.classList.remove('is-settling');
-  const settled = () => !vv || Math.abs(vv.scale - 1) < 0.01;
-  if (settled()) { show(); return; }
-  const check = () => {
-    if (!settled()) return;
-    vv.removeEventListener('resize', check);
-    show();
-  };
-  vv.addEventListener('resize', check);
-  // 1 秒たっても戻らないときは index.html 側の仕組みで表示される
-}
-
-// ===== 【一時的】起動直後の画面サイズの記録（拡大表示の原因調査用。原因が分かったら消す） =====
-function startViewportLog() {
-  const debugEl = document.getElementById('debug');
-  const start = window.startupViewport;
-  if (!debugEl || !start) return;
-  const lines = [];
-  const add = (label, w, h, scale) => {
-    const s = typeof scale === 'number' ? scale.toFixed(2) : '-';
-    lines.push(`${label}: 幅${w} 高さ${h} 拡大${s}`);
-    debugEl.textContent = `画面${screen.width}x${screen.height}\n` + lines.join('\n');
-  };
-  const now = (label) => {
-    const vv = window.visualViewport;
-    add(`${label} ${Date.now() - start.t}ms`, window.innerWidth, window.innerHeight, vv ? vv.scale : null);
-  };
-  add('最初 0ms', start.w, start.h, start.scale);
-  now('JS開始');
-  let count = 0;
-  const onResize = () => { if (count++ < 8) now('変化'); };
-  window.addEventListener('resize', onResize);
-  if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
-  setTimeout(() => now('2秒後'), 2000);
-}
-
 // ===== 起動 =====
 items = loadItems();
 setDayMode('today');
 render();
 document.getElementById('version').textContent = `かんたん予定 バージョン ${APP_VERSION}`;
-startViewportLog();
-revealWhenScaleSettles();
 
 // service worker の登録（オフラインで開けるようにする）。
 // ファイルを直接開いたとき（file://）は使えないので登録しない
