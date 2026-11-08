@@ -4,7 +4,7 @@
 // 方針は「ネット優先」：つながっていれば最新版を取りに行き、だめなら保存しておいた版を使う
 // ファイルを増やした・減らしたときは APP_FILES を直し、CACHE_NAME の番号を上げる
 
-const CACHE_NAME = 'kantan-yotei-v1';
+const CACHE_NAME = 'kantan-yotei-v2';
 const APP_FILES = [
   './',
   './index.html',
@@ -39,8 +39,10 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
 
+  // cache: 'no-cache' … GitHub Pages は「10 分間は古い版を使ってよい」と返すので、
+  // 毎回サーバーに新しい版があるか確認させる（変わっていなければ確認だけで済む）
   event.respondWith(
-    fetch(request)
+    fetch(request.url, { cache: 'no-cache' })
       .then((response) => {
         if (response.ok) {
           const copy = response.clone();

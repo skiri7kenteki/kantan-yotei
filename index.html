@@ -18,6 +18,11 @@
     // 横画面で開いた直後に iPad が一瞬拡大表示するのを隠す（app.js が拡大の戻りを確認して表示する）
     // 万一のため 1 秒後には必ず表示する
     document.documentElement.classList.add('is-settling');
+    // 【一時的】拡大表示の原因調査用：いちばん最初の画面サイズを記録（app.js が表示する）
+    window.startupViewport = {
+      t: Date.now(), w: window.innerWidth, h: window.innerHeight,
+      scale: window.visualViewport ? window.visualViewport.scale : null
+    };
     setTimeout(function () { document.documentElement.classList.remove('is-settling'); }, 1000);
   </script>
 </head>
@@ -70,6 +75,11 @@
       </div>
       <input id="import-file" type="file" accept=".json,application/json" hidden>
     </section>
+
+    <footer class="footer">
+      <p id="version"></p>
+      <pre id="debug" class="debug"></pre>
+    </footer>
   </main>
 
   <script src="./app.js"></script>

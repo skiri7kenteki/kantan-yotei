@@ -43,7 +43,8 @@ PROGRESS.md            進捗メモ
 - パスはすべて相対パス（`./sw.js` など）。先頭 `/` の絶対パスは GitHub Pages のサブパスで壊れる
 - iPad での操作：ボタン・チェックは高さ 48px 以上、入力欄の文字は 16px 以上（iOS の自動ズーム防止）
 - ホーム画面アプリ用に `env(safe-area-inset-*)` で画面の端を避ける
-- service worker は「ネット優先・失敗したらキャッシュ」。キャッシュするファイルを増減したら `sw.js` の `APP_FILES` と `CACHE_NAME` を更新する
+- service worker は「ネット優先・失敗したらキャッシュ」。GitHub Pages の 10 分キャッシュを避けるため `cache: 'no-cache'` で取得する。キャッシュするファイルを増減したら `sw.js` の `APP_FILES` と `CACHE_NAME` を更新する
+- 公開する変更をしたら `app.js` の `APP_VERSION` を上げる（画面下に表示され、iPad に更新が届いたか確認できる）
 - 作業の区切りごとに git commit し、PROGRESS.md を更新する
 
 ## 動作確認のしかた
