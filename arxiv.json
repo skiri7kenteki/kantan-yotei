@@ -1,0 +1,59 @@
+{
+  "source": "arXiv quant-ph",
+  "date": "2026-11-09",
+  "fetchedAt": "2026-11-09T20:42:18+00:00",
+  "newCount": 65,
+  "listUrl": "https://arxiv.org/list/quant-ph/new",
+  "items": [
+    {
+      "title": "Integral zeros of Krawtchouk polynomials and quantum entanglements",
+      "url": "https://arxiv.org/abs/2611.08518",
+      "authors": "Jaeseong Heo, Young-Hoon Kiem ほか"
+    },
+    {
+      "title": "Thermodynamics of Speed and Efficiency with Quantum Feedback",
+      "url": "https://arxiv.org/abs/2611.08564",
+      "authors": "Yue Liu, Ryotaro Honma ほか"
+    },
+    {
+      "title": "Magic Is in the Eye of the Measure",
+      "url": "https://arxiv.org/abs/2611.08586",
+      "authors": "Zhi-Heng Shen, Zhewei Yin ほか"
+    },
+    {
+      "title": "Universality in Quantum Many-Body Spin Ratchets",
+      "url": "https://arxiv.org/abs/2611.08590",
+      "authors": "Andrea Azzali, Marko Ljubotina"
+    },
+    {
+      "title": "Exploring topological signatures of quantum Fisher information scaling in graph states",
+      "url": "https://arxiv.org/abs/2611.08593",
+      "authors": "Majid Hassani, Patrick Emonts ほか"
+    },
+    {
+      "title": "Harnessing dimensional leakage for continuous-variable randomness certification",
+      "url": "https://arxiv.org/abs/2611.08607",
+      "authors": "Mois\\'es Alves, Tailan S. Sarubi ほか"
+    },
+    {
+      "title": "Quantum-enabled measurement of gravitational forces at the milligram scale",
+      "url": "https://arxiv.org/abs/2611.08619",
+      "authors": "Matthew Herbst, Ewa Rej ほか"
+    },
+    {
+      "title": "What are local complementations, really?",
+      "url": "https://arxiv.org/abs/2611.08620",
+      "authors": "Kenneth Goodenough"
+    },
+    {
+      "title": "How Many Shots Does a Quantum Reservoir Need? Measurement Cost and Its Scaling in Buffered Quantum Reservoir Computing",
+      "url": "https://arxiv.org/abs/2611.08632",
+      "authors": "Raman Khurana"
+    },
+    {
+      "title": "Sign-hedged Beam QAOA:Scaling Quantum Optimization Algorithms",
+      "url": "https://arxiv.org/abs/2611.08646",
+      "authors": "Anupama Ray, Arush Sharma"
+    }
+  ]
+}
