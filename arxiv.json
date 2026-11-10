@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-09",
-  "fetchedAt": "2026-11-09T20:42:18+00:00",
-  "newCount": 65,
+  "date": "2026-11-10",
+  "fetchedAt": "2026-11-10T20:36:13+00:00",
+  "newCount": 89,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Integral zeros of Krawtchouk polynomials and quantum entanglements",
-      "url": "https://arxiv.org/abs/2611.08518",
-      "authors": "Jaeseong Heo, Young-Hoon Kiem ほか"
+      "title": "Entanglement percolation enhanced by the power of choice",
+      "url": "https://arxiv.org/abs/2611.10119",
+      "authors": "Yanxuan Shao, Adilson E. Motter"
     },
     {
-      "title": "Thermodynamics of Speed and Efficiency with Quantum Feedback",
-      "url": "https://arxiv.org/abs/2611.08564",
-      "authors": "Yue Liu, Ryotaro Honma ほか"
+      "title": "Bayes-Optimal Quantum Computational Sensing via Convex Spectral Design",
+      "url": "https://arxiv.org/abs/2611.10146",
+      "authors": "Amirhossein Taherpour, Alireza Sadeghi ほか"
     },
     {
-      "title": "Magic Is in the Eye of the Measure",
-      "url": "https://arxiv.org/abs/2611.08586",
-      "authors": "Zhi-Heng Shen, Zhewei Yin ほか"
+      "title": "Symplectic Reck: In-Situ Learning of Gaussian Quantum Operations",
+      "url": "https://arxiv.org/abs/2611.10206",
+      "authors": "Janet F. Zhong, Renwen Yu ほか"
     },
     {
-      "title": "Universality in Quantum Many-Body Spin Ratchets",
-      "url": "https://arxiv.org/abs/2611.08590",
-      "authors": "Andrea Azzali, Marko Ljubotina"
+      "title": "Can One Hear the Size of a Clock?",
+      "url": "https://arxiv.org/abs/2611.10252",
+      "authors": "Markus Baumann, Claudia Linnhoff-Popien"
     },
     {
-      "title": "Exploring topological signatures of quantum Fisher information scaling in graph states",
-      "url": "https://arxiv.org/abs/2611.08593",
-      "authors": "Majid Hassani, Patrick Emonts ほか"
+      "title": "Experimental visual quantum state discrimination",
+      "url": "https://arxiv.org/abs/2611.10282",
+      "authors": "A. Duplinskiy, M. J. Filipovich ほか"
     },
     {
-      "title": "Harnessing dimensional leakage for continuous-variable randomness certification",
-      "url": "https://arxiv.org/abs/2611.08607",
-      "authors": "Mois\\'es Alves, Tailan S. Sarubi ほか"
+      "title": "Regev's Reduction Reaches Reconstruction",
+      "url": "https://arxiv.org/abs/2611.10283",
+      "authors": "Stephen P. Jordan, Quynh T. Nguyen ほか"
     },
     {
-      "title": "Quantum-enabled measurement of gravitational forces at the milligram scale",
-      "url": "https://arxiv.org/abs/2611.08619",
-      "authors": "Matthew Herbst, Ewa Rej ほか"
+      "title": "Practical Ellipse Fitting for Atom Interferometry",
+      "url": "https://arxiv.org/abs/2611.10289",
+      "authors": "N. Fowler, D. B. Reinhardt ほか"
     },
     {
-      "title": "What are local complementations, really?",
-      "url": "https://arxiv.org/abs/2611.08620",
-      "authors": "Kenneth Goodenough"
+      "title": "Dynamical Light-Matter Coupling with Protected Superconducting Oscillators",
+      "url": "https://arxiv.org/abs/2611.10295",
+      "authors": "Fernando Valadares"
     },
     {
-      "title": "How Many Shots Does a Quantum Reservoir Need? Measurement Cost and Its Scaling in Buffered Quantum Reservoir Computing",
-      "url": "https://arxiv.org/abs/2611.08632",
-      "authors": "Raman Khurana"
+      "title": "Adaptive Protocol for R\\'enyi Entropy Estimation",
+      "url": "https://arxiv.org/abs/2611.10330",
+      "authors": "Mu Niu, Yi Hong Teoh ほか"
     },
     {
-      "title": "Sign-hedged Beam QAOA:Scaling Quantum Optimization Algorithms",
-      "url": "https://arxiv.org/abs/2611.08646",
-      "authors": "Anupama Ray, Arush Sharma"
+      "title": "Realizing Unstructured PDE Forecasting on Superconducting Quantum Processors",
+      "url": "https://arxiv.org/abs/2611.10351",
+      "authors": "Erik Connerty, Jonathan Eastridge ほか"
     }
   ]
 }
