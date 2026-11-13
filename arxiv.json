@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-11",
-  "fetchedAt": "2026-11-11T21:23:05+00:00",
-  "newCount": 71,
+  "date": "2026-11-13",
+  "fetchedAt": "2026-11-13T20:43:16+00:00",
+  "newCount": 120,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Time Running Backwards, and Where It Stops: Superoscillations of Proper Time and the Memory of the Environment",
-      "url": "https://arxiv.org/abs/2611.12971",
-      "authors": "Yakir Aharonov, Avshalom C. Elitzur"
+      "title": "Circuit-aware protection against burst errors in lattice surgery",
+      "url": "https://arxiv.org/abs/2611.14583",
+      "authors": "Jaebum Kim"
     },
     {
-      "title": "Second-level termination of the PPT entanglement-cost hierarchy for two qutrits",
-      "url": "https://arxiv.org/abs/2611.12993",
-      "authors": "Wei Song, Xiao-Lan Zong ほか"
+      "title": "Controlled preparation and unconditional transport on a fluctuating quantum graph",
+      "url": "https://arxiv.org/abs/2611.14588",
+      "authors": "Xianbin Wang"
     },
     {
-      "title": "Quantum simulation of real-time bosonic dynamics with binary and unary position encodings on superconducting and trapped-ion processors",
-      "url": "https://arxiv.org/abs/2611.13079",
-      "authors": "Masanori Hanada, Jiwoo Seo ほか"
+      "title": "Probing Krylov Dynamics in Driven Many-Body Systems",
+      "url": "https://arxiv.org/abs/2611.14611",
+      "authors": "Andr\\'as Grabarits, Adolfo del Campo"
     },
     {
-      "title": "Field-induced phase-matching in Josephson traveling wave parametric amplifiers",
-      "url": "https://arxiv.org/abs/2611.13084",
-      "authors": "Daniil E. Bazulin, Simon Gandorfer ほか"
+      "title": "Squeezed Light Generation by Cooper Pair Recombination in a Superconductor-Semiconductor Structure",
+      "url": "https://arxiv.org/abs/2611.14622",
+      "authors": "Sima Buchbinder, Avi Koriat ほか"
     },
     {
-      "title": "Time Direction Entanglement Entropy of Free Fermion Ground States",
-      "url": "https://arxiv.org/abs/2611.13085",
-      "authors": "Xinyu Sun, Bowei Liu ほか"
+      "title": "Towards Distributed Quantum Computing: Quantum Gate Teleportation via Satellite-Distributed Entanglement under Atmospheric Depolarization",
+      "url": "https://arxiv.org/abs/2611.14623",
+      "authors": "Artur Czerwinski, Jakub J. Borkowski ほか"
     },
     {
-      "title": "Kinematic Quantum Geometry",
-      "url": "https://arxiv.org/abs/2611.13089",
-      "authors": "Bernardo Barrera, Nishchhal Verma ほか"
+      "title": "The memory cost of sequential quantum state preparation",
+      "url": "https://arxiv.org/abs/2611.14652",
+      "authors": "Jian Li, Patryk Lipka-Bartosik"
     },
     {
-      "title": "Frustration-free control for quantum-state preparation: an exact first-passage theory",
-      "url": "https://arxiv.org/abs/2611.13094",
-      "authors": "T. D\\\"orstel, T. C. Lang ほか"
+      "title": "Quantum synchronization in XX chains under relaxation",
+      "url": "https://arxiv.org/abs/2611.14657",
+      "authors": "K\\\"ubra S\\\"umer, Ege Yi\\u{g}it Ald{\\i}rmaz ほか"
     },
     {
-      "title": "Surface codes with coherent errors: optimal decoding and finite-size crossovers",
-      "url": "https://arxiv.org/abs/2611.13098",
-      "authors": "Xu-Dong Dai, Zhou-Quan Wan ほか"
+      "title": "Faithful filtering of constrained quantum records: Local limits and collective advantage from loops",
+      "url": "https://arxiv.org/abs/2611.14695",
+      "authors": "Qingtian Miao"
     },
     {
-      "title": "Third-Order Quantum Information from Distributed Randomized Measurements",
-      "url": "https://arxiv.org/abs/2611.13099",
-      "authors": "Giovanni Scala, Corrado Cosimo Mattiacci ほか"
+      "title": "A New Framework for Quantum Reinforcement Learning",
+      "url": "https://arxiv.org/abs/2611.14731",
+      "authors": "Alireza Tavakoli, Mohsen Heidari"
     },
     {
-      "title": "Which data samples matter when training a quantum model?",
-      "url": "https://arxiv.org/abs/2611.13103",
-      "authors": "M. Emre Sahin, Cenk T\\\"uys\\\"uz ほか"
+      "title": "Bounding Freedom of Choice via Causal Network Embeddings",
+      "url": "https://arxiv.org/abs/2611.14791",
+      "authors": "George Moreno, Emanuele Polino ほか"
     }
   ]
 }
