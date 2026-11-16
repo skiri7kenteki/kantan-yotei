@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-13",
-  "fetchedAt": "2026-11-13T20:43:16+00:00",
-  "newCount": 120,
+  "date": "2026-11-16",
+  "fetchedAt": "2026-11-16T20:40:36+00:00",
+  "newCount": 65,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Circuit-aware protection against burst errors in lattice surgery",
-      "url": "https://arxiv.org/abs/2611.14583",
-      "authors": "Jaebum Kim"
+      "title": "Analytic spread complexity in three-level systems and the spacing-ratio distribution",
+      "url": "https://arxiv.org/abs/2611.17417",
+      "authors": "Pratik Nandy"
     },
     {
-      "title": "Controlled preparation and unconditional transport on a fluctuating quantum graph",
-      "url": "https://arxiv.org/abs/2611.14588",
-      "authors": "Xianbin Wang"
+      "title": "Quantum violation of Causal Friendliness in the instrumental scenario",
+      "url": "https://arxiv.org/abs/2611.17431",
+      "authors": "Emanuele Polino, Giulia Lelli ほか"
     },
     {
-      "title": "Probing Krylov Dynamics in Driven Many-Body Systems",
-      "url": "https://arxiv.org/abs/2611.14611",
-      "authors": "Andr\\'as Grabarits, Adolfo del Campo"
+      "title": "Fast mixing and thermal phases from strong decay of correlations",
+      "url": "https://arxiv.org/abs/2611.17433",
+      "authors": "Chao Yin, Vedika Khemani"
     },
     {
-      "title": "Squeezed Light Generation by Cooper Pair Recombination in a Superconductor-Semiconductor Structure",
-      "url": "https://arxiv.org/abs/2611.14622",
-      "authors": "Sima Buchbinder, Avi Koriat ほか"
+      "title": "Optically-induced electric Aharonov-Bohm effect",
+      "url": "https://arxiv.org/abs/2611.17435",
+      "authors": "Gabriel P. Martins, Herman Batelaan ほか"
     },
     {
-      "title": "Towards Distributed Quantum Computing: Quantum Gate Teleportation via Satellite-Distributed Entanglement under Atmospheric Depolarization",
-      "url": "https://arxiv.org/abs/2611.14623",
-      "authors": "Artur Czerwinski, Jakub J. Borkowski ほか"
+      "title": "QuantumInputOutput.jl: A Julia framework for input-output theory with quantum pulses and the SLH formalism",
+      "url": "https://arxiv.org/abs/2611.17451",
+      "authors": "Christoph Hotter, Orjan Ameye ほか"
     },
     {
-      "title": "The memory cost of sequential quantum state preparation",
-      "url": "https://arxiv.org/abs/2611.14652",
-      "authors": "Jian Li, Patryk Lipka-Bartosik"
+      "title": "Efficient quantum-circuit simulation of classical control of computational order",
+      "url": "https://arxiv.org/abs/2611.17454",
+      "authors": "Rapha\\\"el Mothe, Jessica Bavaresco"
     },
     {
-      "title": "Quantum synchronization in XX chains under relaxation",
-      "url": "https://arxiv.org/abs/2611.14657",
-      "authors": "K\\\"ubra S\\\"umer, Ege Yi\\u{g}it Ald{\\i}rmaz ほか"
+      "title": "The radical pair mechanism can generate nuclear-spin entanglement",
+      "url": "https://arxiv.org/abs/2611.17497",
+      "authors": "Rishabh, Hadi Zadeh-Haghighi ほか"
     },
     {
-      "title": "Faithful filtering of constrained quantum records: Local limits and collective advantage from loops",
-      "url": "https://arxiv.org/abs/2611.14695",
-      "authors": "Qingtian Miao"
+      "title": "Probing Spatiotemporal Quantum Correlations with Two-Qubit Relaxometry",
+      "url": "https://arxiv.org/abs/2611.17509",
+      "authors": "Christina Psaroudaki"
     },
     {
-      "title": "A New Framework for Quantum Reinforcement Learning",
-      "url": "https://arxiv.org/abs/2611.14731",
-      "authors": "Alireza Tavakoli, Mohsen Heidari"
+      "title": "Finite-time spectral enhancement of transient quantum thermometry",
+      "url": "https://arxiv.org/abs/2611.17522",
+      "authors": "M. Tahir Naseem, Asghar Ullah ほか"
     },
     {
-      "title": "Bounding Freedom of Choice via Causal Network Embeddings",
-      "url": "https://arxiv.org/abs/2611.14791",
-      "authors": "George Moreno, Emanuele Polino ほか"
+      "title": "Recursive Quantum Alternating Operator Ansatz",
+      "url": "https://arxiv.org/abs/2611.17537",
+      "authors": "Lennart Binkowski, Stuart Flannigan"
     }
   ]
 }
