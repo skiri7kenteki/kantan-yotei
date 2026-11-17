@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-16",
-  "fetchedAt": "2026-11-16T20:40:36+00:00",
-  "newCount": 65,
+  "date": "2026-11-17",
+  "fetchedAt": "2026-11-17T20:43:57+00:00",
+  "newCount": 116,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Analytic spread complexity in three-level systems and the spacing-ratio distribution",
-      "url": "https://arxiv.org/abs/2611.17417",
-      "authors": "Pratik Nandy"
+      "title": "Directional gate-error asymmetry and universal selectivity bounds in non-unital open quantum systems",
+      "url": "https://arxiv.org/abs/2611.18755",
+      "authors": "Amritash Patra"
     },
     {
-      "title": "Quantum violation of Causal Friendliness in the instrumental scenario",
-      "url": "https://arxiv.org/abs/2611.17431",
-      "authors": "Emanuele Polino, Giulia Lelli ほか"
+      "title": "Quantum Transitions From Integrable to Chaotic",
+      "url": "https://arxiv.org/abs/2611.18777",
+      "authors": "Sizhe Yan, Biao Wu"
     },
     {
-      "title": "Fast mixing and thermal phases from strong decay of correlations",
-      "url": "https://arxiv.org/abs/2611.17433",
-      "authors": "Chao Yin, Vedika Khemani"
+      "title": "Optimal Frobenius light cones for power-law systems in any dimension",
+      "url": "https://arxiv.org/abs/2611.18829",
+      "authors": "Laura Shou, An Le ほか"
     },
     {
-      "title": "Optically-induced electric Aharonov-Bohm effect",
-      "url": "https://arxiv.org/abs/2611.17435",
-      "authors": "Gabriel P. Martins, Herman Batelaan ほか"
+      "title": "Metamorphic Testing of Quantum Software based on Stabilizer States",
+      "url": "https://arxiv.org/abs/2611.18838",
+      "authors": "Adri\\'an Mar\\'in Boyero, Fynn Otto ほか"
     },
     {
-      "title": "QuantumInputOutput.jl: A Julia framework for input-output theory with quantum pulses and the SLH formalism",
-      "url": "https://arxiv.org/abs/2611.17451",
-      "authors": "Christoph Hotter, Orjan Ameye ほか"
+      "title": "Universal Quantum Computation in a Wigner's Friend Framework",
+      "url": "https://arxiv.org/abs/2611.18839",
+      "authors": "Mart\\'i Cladera-Rossell\\'o, Sebastian Horvat ほか"
     },
     {
-      "title": "Efficient quantum-circuit simulation of classical control of computational order",
-      "url": "https://arxiv.org/abs/2611.17454",
-      "authors": "Rapha\\\"el Mothe, Jessica Bavaresco"
+      "title": "A Quasipolynomial Quantum Algorithm for the Vector Dihedral Coset Problem with Smooth Modulus",
+      "url": "https://arxiv.org/abs/2611.18857",
+      "authors": "Aparna Gupte"
     },
     {
-      "title": "The radical pair mechanism can generate nuclear-spin entanglement",
-      "url": "https://arxiv.org/abs/2611.17497",
-      "authors": "Rishabh, Hadi Zadeh-Haghighi ほか"
+      "title": "Double-Randomized Quantum Singular Value Transformations For Early Fault-Tolerant Quantum Computers",
+      "url": "https://arxiv.org/abs/2611.18881",
+      "authors": "Joel Bierman, Pawan Poudel ほか"
     },
     {
-      "title": "Probing Spatiotemporal Quantum Correlations with Two-Qubit Relaxometry",
-      "url": "https://arxiv.org/abs/2611.17509",
-      "authors": "Christina Psaroudaki"
+      "title": "Gate tunable spin splitting for Andreev spin qubits in Ge quantum well heterostructures",
+      "url": "https://arxiv.org/abs/2611.18888",
+      "authors": "Avani Vivrekar, Benjamin D. Woods ほか"
     },
     {
-      "title": "Finite-time spectral enhancement of transient quantum thermometry",
-      "url": "https://arxiv.org/abs/2611.17522",
-      "authors": "M. Tahir Naseem, Asghar Ullah ほか"
+      "title": "Certifying quantum generative models beyond the Fisher trace",
+      "url": "https://arxiv.org/abs/2611.18955",
+      "authors": "Vicente Leyton-Ortega, Kathleen Hamilton"
     },
     {
-      "title": "Recursive Quantum Alternating Operator Ansatz",
-      "url": "https://arxiv.org/abs/2611.17537",
-      "authors": "Lennart Binkowski, Stuart Flannigan"
+      "title": "Hidden Momenta due to Magneto-Electric Coupling in Non-Reciprocal Media",
+      "url": "https://arxiv.org/abs/2611.18975",
+      "authors": "William S. McGregor, Niclas Westerberg ほか"
     }
   ]
 }
