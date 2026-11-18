@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-17",
-  "fetchedAt": "2026-11-17T20:43:57+00:00",
-  "newCount": 116,
+  "date": "2026-11-18",
+  "fetchedAt": "2026-11-18T20:44:37+00:00",
+  "newCount": 91,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Directional gate-error asymmetry and universal selectivity bounds in non-unital open quantum systems",
-      "url": "https://arxiv.org/abs/2611.18755",
-      "authors": "Amritash Patra"
+      "title": "Remark on internal relaxation in large number qubit systems",
+      "url": "https://arxiv.org/abs/2611.21681",
+      "authors": "Martin Jan{\\ss}en"
     },
     {
-      "title": "Quantum Transitions From Integrable to Chaotic",
-      "url": "https://arxiv.org/abs/2611.18777",
-      "authors": "Sizhe Yan, Biao Wu"
+      "title": "CSS circuits are ICM circuits without magic states",
+      "url": "https://arxiv.org/abs/2611.21685",
+      "authors": "Alexandru Paler"
     },
     {
-      "title": "Optimal Frobenius light cones for power-law systems in any dimension",
-      "url": "https://arxiv.org/abs/2611.18829",
-      "authors": "Laura Shou, An Le ほか"
+      "title": "QEDist: Practical Exact Distance Certification for Stabilizer Codes",
+      "url": "https://arxiv.org/abs/2611.21709",
+      "authors": "Jong Yeon Lee"
     },
     {
-      "title": "Metamorphic Testing of Quantum Software based on Stabilizer States",
-      "url": "https://arxiv.org/abs/2611.18838",
-      "authors": "Adri\\'an Mar\\'in Boyero, Fynn Otto ほか"
+      "title": "Black holes as black boxes: a query lower bound on python's lunch decoding",
+      "url": "https://arxiv.org/abs/2611.21723",
+      "authors": "Chris Waddell, Michelle Xu"
     },
     {
-      "title": "Universal Quantum Computation in a Wigner's Friend Framework",
-      "url": "https://arxiv.org/abs/2611.18839",
-      "authors": "Mart\\'i Cladera-Rossell\\'o, Sebastian Horvat ほか"
+      "title": "A Proposal for Quantum Reference Frames in Quantum Field Theory and their Experimental Exploration",
+      "url": "https://arxiv.org/abs/2611.21740",
+      "authors": "Ivan Agullo, Fabio M. Mele"
     },
     {
-      "title": "A Quasipolynomial Quantum Algorithm for the Vector Dihedral Coset Problem with Smooth Modulus",
-      "url": "https://arxiv.org/abs/2611.18857",
-      "authors": "Aparna Gupte"
+      "title": "Restoring quantum neural network trainability through reusable calibration",
+      "url": "https://arxiv.org/abs/2611.21748",
+      "authors": "Ruizhe Shen, Xianquan Yan ほか"
     },
     {
-      "title": "Double-Randomized Quantum Singular Value Transformations For Early Fault-Tolerant Quantum Computers",
-      "url": "https://arxiv.org/abs/2611.18881",
-      "authors": "Joel Bierman, Pawan Poudel ほか"
+      "title": "Robust Passive Quantum Memory in Three Dimensions, Part I: Thermal and Zero-Temperature Perturbative Stability",
+      "url": "https://arxiv.org/abs/2611.21749",
+      "authors": "Patrick Hayden"
     },
     {
-      "title": "Gate tunable spin splitting for Andreev spin qubits in Ge quantum well heterostructures",
-      "url": "https://arxiv.org/abs/2611.18888",
-      "authors": "Avani Vivrekar, Benjamin D. Woods ほか"
+      "title": "Loss-Tolerant Quantum Correlations Between Atomic and Photonic Qubits",
+      "url": "https://arxiv.org/abs/2611.21753",
+      "authors": "Leonardo Ruscio, Love A. Pettersson ほか"
     },
     {
-      "title": "Certifying quantum generative models beyond the Fisher trace",
-      "url": "https://arxiv.org/abs/2611.18955",
-      "authors": "Vicente Leyton-Ortega, Kathleen Hamilton"
+      "title": "Distrustful entanglement-based Quantum Key Distribution",
+      "url": "https://arxiv.org/abs/2611.21759",
+      "authors": "Shubhayan Sarkar"
     },
     {
-      "title": "Hidden Momenta due to Magneto-Electric Coupling in Non-Reciprocal Media",
-      "url": "https://arxiv.org/abs/2611.18975",
-      "authors": "William S. McGregor, Niclas Westerberg ほか"
+      "title": "AI Scientist Discovered Robust Quantum Control",
+      "url": "https://arxiv.org/abs/2611.21765",
+      "authors": "Jiahao Yan, Xuanying Lai ほか"
     }
   ]
 }
