@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-18",
-  "fetchedAt": "2026-11-18T20:44:37+00:00",
-  "newCount": 91,
+  "date": "2026-11-19",
+  "fetchedAt": "2026-11-19T20:45:02+00:00",
+  "newCount": 85,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Remark on internal relaxation in large number qubit systems",
-      "url": "https://arxiv.org/abs/2611.21681",
-      "authors": "Martin Jan{\\ss}en"
+      "title": "The Bapat-Sunder eigenvalue conjecture fails over the reals",
+      "url": "https://arxiv.org/abs/2611.23269",
+      "authors": "Logan R. Chalmers"
     },
     {
-      "title": "CSS circuits are ICM circuits without magic states",
-      "url": "https://arxiv.org/abs/2611.21685",
-      "authors": "Alexandru Paler"
+      "title": "Scrambling leads to entanglement cost in NLQC",
+      "url": "https://arxiv.org/abs/2611.23378",
+      "authors": "Atsuya Hasegawa, Alex May"
     },
     {
-      "title": "QEDist: Practical Exact Distance Certification for Stabilizer Codes",
-      "url": "https://arxiv.org/abs/2611.21709",
-      "authors": "Jong Yeon Lee"
+      "title": "Look Mum, No Hands! Quantum State Preparation without Time-Dependent Control",
+      "url": "https://arxiv.org/abs/2611.23382",
+      "authors": "Tomasz Andrzejewski, Yuri Minoguchi ほか"
     },
     {
-      "title": "Black holes as black boxes: a query lower bound on python's lunch decoding",
-      "url": "https://arxiv.org/abs/2611.21723",
-      "authors": "Chris Waddell, Michelle Xu"
+      "title": "Collective Superconducting-Qubit Interfaces for Microwave-to-Optical Quantum Transduction",
+      "url": "https://arxiv.org/abs/2611.23383",
+      "authors": "Nicolas Dirnegger, Matthew Guibord ほか"
     },
     {
-      "title": "A Proposal for Quantum Reference Frames in Quantum Field Theory and their Experimental Exploration",
-      "url": "https://arxiv.org/abs/2611.21740",
-      "authors": "Ivan Agullo, Fabio M. Mele"
+      "title": "Optimal Joint Bounds for Sparse Ground-State Energy Estimation and Ground-State Preparation",
+      "url": "https://arxiv.org/abs/2611.23387",
+      "authors": "Dhrumil Patel"
     },
     {
-      "title": "Restoring quantum neural network trainability through reusable calibration",
-      "url": "https://arxiv.org/abs/2611.21748",
-      "authors": "Ruizhe Shen, Xianquan Yan ほか"
+      "title": "Symmetry classification of hyperfine rovibrational molecular phase space",
+      "url": "https://arxiv.org/abs/2611.23406",
+      "authors": "Elin Ranjan Das, Jing-Chen Zhang ほか"
     },
     {
-      "title": "Robust Passive Quantum Memory in Three Dimensions, Part I: Thermal and Zero-Temperature Perturbative Stability",
-      "url": "https://arxiv.org/abs/2611.21749",
-      "authors": "Patrick Hayden"
+      "title": "Qubit-qumode simulation of molecular torsion in photoisomerization",
+      "url": "https://arxiv.org/abs/2611.23408",
+      "authors": "Dimitrios Athanasakos, Florian Hechenberger ほか"
     },
     {
-      "title": "Loss-Tolerant Quantum Correlations Between Atomic and Photonic Qubits",
-      "url": "https://arxiv.org/abs/2611.21753",
-      "authors": "Leonardo Ruscio, Love A. Pettersson ほか"
+      "title": "Experimental constraints on gauge hidden-variable models in Bell tests",
+      "url": "https://arxiv.org/abs/2611.23418",
+      "authors": "Li-Yu Shen, Lukas Scarfe ほか"
     },
     {
-      "title": "Distrustful entanglement-based Quantum Key Distribution",
-      "url": "https://arxiv.org/abs/2611.21759",
-      "authors": "Shubhayan Sarkar"
+      "title": "High-rate low-distance color codes",
+      "url": "https://arxiv.org/abs/2611.23420",
+      "authors": "Peter-Jan H. S. Derks, Lucas Berent ほか"
     },
     {
-      "title": "AI Scientist Discovered Robust Quantum Control",
-      "url": "https://arxiv.org/abs/2611.21765",
-      "authors": "Jiahao Yan, Xuanying Lai ほか"
+      "title": "Compute Before You Digitize: ADC-less Mixed-Signal Processing for Scalable Cryogenic Qubit Readout",
+      "url": "https://arxiv.org/abs/2611.23448",
+      "authors": "Qirui Zhang, Ben Toby ほか"
     }
   ]
 }
