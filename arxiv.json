@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-19",
-  "fetchedAt": "2026-11-19T20:45:02+00:00",
-  "newCount": 85,
+  "date": "2026-11-20",
+  "fetchedAt": "2026-11-20T20:41:05+00:00",
+  "newCount": 78,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "The Bapat-Sunder eigenvalue conjecture fails over the reals",
-      "url": "https://arxiv.org/abs/2611.23269",
-      "authors": "Logan R. Chalmers"
+      "title": "Entanglement Geometry Beyond Polygons: Graph-Theoretic Entanglement Inequalities",
+      "url": "https://arxiv.org/abs/2611.25019",
+      "authors": "Masoud Gharahi"
     },
     {
-      "title": "Scrambling leads to entanglement cost in NLQC",
-      "url": "https://arxiv.org/abs/2611.23378",
-      "authors": "Atsuya Hasegawa, Alex May"
+      "title": "The Clifford Hierarchy from Clifford Stabilizers in 2D",
+      "url": "https://arxiv.org/abs/2611.25025",
+      "authors": "Alison Warman, Sakura Schafer-Nameki"
     },
     {
-      "title": "Look Mum, No Hands! Quantum State Preparation without Time-Dependent Control",
-      "url": "https://arxiv.org/abs/2611.23382",
-      "authors": "Tomasz Andrzejewski, Yuri Minoguchi ほか"
+      "title": "Passive memories beyond the Ising model: from SFQ to GKP",
+      "url": "https://arxiv.org/abs/2611.25030",
+      "authors": "Simon Lieu"
     },
     {
-      "title": "Collective Superconducting-Qubit Interfaces for Microwave-to-Optical Quantum Transduction",
-      "url": "https://arxiv.org/abs/2611.23383",
-      "authors": "Nicolas Dirnegger, Matthew Guibord ほか"
+      "title": "Birthday-Scale Non-Adaptive Security for Strong Pseudorandom Unitaries",
+      "url": "https://arxiv.org/abs/2611.25038",
+      "authors": "Zvika Brakerski, Lior Ozer ほか"
     },
     {
-      "title": "Optimal Joint Bounds for Sparse Ground-State Energy Estimation and Ground-State Preparation",
-      "url": "https://arxiv.org/abs/2611.23387",
-      "authors": "Dhrumil Patel"
+      "title": "A Basis-Dependent Kernel for Learning Quantum Phases of Matter",
+      "url": "https://arxiv.org/abs/2611.25048",
+      "authors": "Clemens Lindner, Vin\\'icius Mohr ほか"
     },
     {
-      "title": "Symmetry classification of hyperfine rovibrational molecular phase space",
-      "url": "https://arxiv.org/abs/2611.23406",
-      "authors": "Elin Ranjan Das, Jing-Chen Zhang ほか"
+      "title": "Modeling couplings and quench dynamics of hundred-qubit quantum processors",
+      "url": "https://arxiv.org/abs/2611.25053",
+      "authors": "Simon Pettersson Fors, Eric Dj\\\"aknegren ほか"
     },
     {
-      "title": "Qubit-qumode simulation of molecular torsion in photoisomerization",
-      "url": "https://arxiv.org/abs/2611.23408",
-      "authors": "Dimitrios Athanasakos, Florian Hechenberger ほか"
+      "title": "Certified Discovery of Quantum Phase Diagrams",
+      "url": "https://arxiv.org/abs/2611.25064",
+      "authors": "Yuanxi Liu, John Preskill ほか"
     },
     {
-      "title": "Experimental constraints on gauge hidden-variable models in Bell tests",
-      "url": "https://arxiv.org/abs/2611.23418",
-      "authors": "Li-Yu Shen, Lukas Scarfe ほか"
+      "title": "Self-testing in Fermionic Networks",
+      "url": "https://arxiv.org/abs/2611.25074",
+      "authors": "Fatemeh Moradi Kalarde, Luis Mu\\~{n}ecas Tom\\'{a}s ほか"
     },
     {
-      "title": "High-rate low-distance color codes",
-      "url": "https://arxiv.org/abs/2611.23420",
-      "authors": "Peter-Jan H. S. Derks, Lucas Berent ほか"
+      "title": "A measurement-free quantum error correction protocol for superconducting cavities",
+      "url": "https://arxiv.org/abs/2611.25095",
+      "authors": "Q. Rumman Rahman, S. M. Girvin ほか"
     },
     {
-      "title": "Compute Before You Digitize: ADC-less Mixed-Signal Processing for Scalable Cryogenic Qubit Readout",
-      "url": "https://arxiv.org/abs/2611.23448",
-      "authors": "Qirui Zhang, Ben Toby ほか"
+      "title": "Agentic MLIR-to-QIR Translation with Dual-Backend Testing: A Hybrid Deterministic and LLM Approach",
+      "url": "https://arxiv.org/abs/2611.25106",
+      "authors": "Sharmin Afrose, Vicente Leyton-Ortega ほか"
     }
   ]
 }
