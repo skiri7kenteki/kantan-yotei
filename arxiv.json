@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-20",
-  "fetchedAt": "2026-11-20T20:41:05+00:00",
-  "newCount": 78,
+  "date": "2026-11-23",
+  "fetchedAt": "2026-11-23T20:43:33+00:00",
+  "newCount": 51,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Entanglement Geometry Beyond Polygons: Graph-Theoretic Entanglement Inequalities",
-      "url": "https://arxiv.org/abs/2611.25019",
-      "authors": "Masoud Gharahi"
+      "title": "Thermalization and quantum chaos in a pure gauge discrete non-Abelian lattice gauge theory",
+      "url": "https://arxiv.org/abs/2611.26695",
+      "authors": "Marco Vaia, Edoardo Ballini ほか"
     },
     {
-      "title": "The Clifford Hierarchy from Clifford Stabilizers in 2D",
-      "url": "https://arxiv.org/abs/2611.25025",
-      "authors": "Alison Warman, Sakura Schafer-Nameki"
+      "title": "Certification of non-stabilizerness in multi-qubit systems via worst-case random access codes",
+      "url": "https://arxiv.org/abs/2611.26705",
+      "authors": "Santiago Zamora"
     },
     {
-      "title": "Passive memories beyond the Ising model: from SFQ to GKP",
-      "url": "https://arxiv.org/abs/2611.25030",
-      "authors": "Simon Lieu"
+      "title": "Improved Digitization Bounds for U(1) Lattice Gauge Theory via Semiclassical Analysis",
+      "url": "https://arxiv.org/abs/2611.26720",
+      "authors": "Di Fang, Yu Tong"
     },
     {
-      "title": "Birthday-Scale Non-Adaptive Security for Strong Pseudorandom Unitaries",
-      "url": "https://arxiv.org/abs/2611.25038",
-      "authors": "Zvika Brakerski, Lior Ozer ほか"
+      "title": "Entropy production from crossing a quantum separatrix",
+      "url": "https://arxiv.org/abs/2611.26737",
+      "authors": "Peter Stabel, James R. Anglin"
     },
     {
-      "title": "A Basis-Dependent Kernel for Learning Quantum Phases of Matter",
-      "url": "https://arxiv.org/abs/2611.25048",
-      "authors": "Clemens Lindner, Vin\\'icius Mohr ほか"
+      "title": "Efficient Tensor Decomposition of the Coulomb and Coulomb-like Potentials and Its Application to Probing Molecular Geometries Using a Quantum Computer",
+      "url": "https://arxiv.org/abs/2611.26740",
+      "authors": "James Brown, Masashi Takahashi ほか"
     },
     {
-      "title": "Modeling couplings and quench dynamics of hundred-qubit quantum processors",
-      "url": "https://arxiv.org/abs/2611.25053",
-      "authors": "Simon Pettersson Fors, Eric Dj\\\"aknegren ほか"
+      "title": "Gravity-induced entanglement assisted by an additional interaction using magic angle calibration",
+      "url": "https://arxiv.org/abs/2611.26755",
+      "authors": "Daisuke Miki, Alfred Li ほか"
     },
     {
-      "title": "Certified Discovery of Quantum Phase Diagrams",
-      "url": "https://arxiv.org/abs/2611.25064",
-      "authors": "Yuanxi Liu, John Preskill ほか"
+      "title": "Harnessing Dephasing for Quantum Reservoir Computing with a Minimum Complexity Architecture: Applications to Nonlinear Time-Series Prediction",
+      "url": "https://arxiv.org/abs/2611.26762",
+      "authors": "Yicheng Song, Zhipeng Yang ほか"
     },
     {
-      "title": "Self-testing in Fermionic Networks",
-      "url": "https://arxiv.org/abs/2611.25074",
-      "authors": "Fatemeh Moradi Kalarde, Luis Mu\\~{n}ecas Tom\\'{a}s ほか"
+      "title": "Frequency-bin-encoded quantum secret sharing with fast basis switching",
+      "url": "https://arxiv.org/abs/2611.26816",
+      "authors": "Chen-You Su, Suparna Seshadri ほか"
     },
     {
-      "title": "A measurement-free quantum error correction protocol for superconducting cavities",
-      "url": "https://arxiv.org/abs/2611.25095",
-      "authors": "Q. Rumman Rahman, S. M. Girvin ほか"
+      "title": "Scheduling the quantum implementation of the Trotter decomposition for Hamiltonian simulation",
+      "url": "https://arxiv.org/abs/2611.26884",
+      "authors": "Augustin Ho (Graduate School of Science and Technology, Keio University ほか"
     },
     {
-      "title": "Agentic MLIR-to-QIR Translation with Dual-Backend Testing: A Hybrid Deterministic and LLM Approach",
-      "url": "https://arxiv.org/abs/2611.25106",
-      "authors": "Sharmin Afrose, Vicente Leyton-Ortega ほか"
+      "title": "Analog Explorations of Quantum State Measurement",
+      "url": "https://arxiv.org/abs/2611.26889",
+      "authors": "Benjamin Krawciw, James P. Crutchfield"
     }
   ]
 }
