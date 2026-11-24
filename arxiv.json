@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-23",
-  "fetchedAt": "2026-11-23T20:43:33+00:00",
-  "newCount": 51,
+  "date": "2026-11-24",
+  "fetchedAt": "2026-11-24T20:44:27+00:00",
+  "newCount": 110,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "Thermalization and quantum chaos in a pure gauge discrete non-Abelian lattice gauge theory",
-      "url": "https://arxiv.org/abs/2611.26695",
-      "authors": "Marco Vaia, Edoardo Ballini ほか"
+      "title": "State-selective dynamical freezing in driven Rydberg atom chains",
+      "url": "https://arxiv.org/abs/2611.28215",
+      "authors": "Madhumita Sarkar, Sougato Bose ほか"
     },
     {
-      "title": "Certification of non-stabilizerness in multi-qubit systems via worst-case random access codes",
-      "url": "https://arxiv.org/abs/2611.26705",
-      "authors": "Santiago Zamora"
+      "title": "Foliated surface codes for optimal skip-gate leakage correction",
+      "url": "https://arxiv.org/abs/2611.28219",
+      "authors": "Runjiang Bi, Nikita Astrakhantsev ほか"
     },
     {
-      "title": "Improved Digitization Bounds for U(1) Lattice Gauge Theory via Semiclassical Analysis",
-      "url": "https://arxiv.org/abs/2611.26720",
-      "authors": "Di Fang, Yu Tong"
+      "title": "Mitigating large circuits with a learned small-circuit mitigator",
+      "url": "https://arxiv.org/abs/2611.28261",
+      "authors": "Thi Ha Kyaw, Pablo D\\'iez-Valle ほか"
     },
     {
-      "title": "Entropy production from crossing a quantum separatrix",
-      "url": "https://arxiv.org/abs/2611.26737",
-      "authors": "Peter Stabel, James R. Anglin"
+      "title": "Comment on phase vortex lattices in neutron interferometry",
+      "url": "https://arxiv.org/abs/2611.28316",
+      "authors": "Wolfgang Treimer, Terrence Jach ほか"
     },
     {
-      "title": "Efficient Tensor Decomposition of the Coulomb and Coulomb-like Potentials and Its Application to Probing Molecular Geometries Using a Quantum Computer",
-      "url": "https://arxiv.org/abs/2611.26740",
-      "authors": "James Brown, Masashi Takahashi ほか"
+      "title": "Distant Bell States via Measured Spin Chain Dynamics",
+      "url": "https://arxiv.org/abs/2611.28325",
+      "authors": "Ralph Jason Costales, Sougato Bose"
     },
     {
-      "title": "Gravity-induced entanglement assisted by an additional interaction using magic angle calibration",
-      "url": "https://arxiv.org/abs/2611.26755",
-      "authors": "Daisuke Miki, Alfred Li ほか"
+      "title": "Tailored Magic States for Algorithmic Primitives",
+      "url": "https://arxiv.org/abs/2611.28353",
+      "authors": "Matthew Steinberg, Joseph Sullivan ほか"
     },
     {
-      "title": "Harnessing Dephasing for Quantum Reservoir Computing with a Minimum Complexity Architecture: Applications to Nonlinear Time-Series Prediction",
-      "url": "https://arxiv.org/abs/2611.26762",
-      "authors": "Yicheng Song, Zhipeng Yang ほか"
+      "title": "Incompressible quantum information",
+      "url": "https://arxiv.org/abs/2611.28361",
+      "authors": "Lasse H. Wolff, Matthias Christandl ほか"
     },
     {
-      "title": "Frequency-bin-encoded quantum secret sharing with fast basis switching",
-      "url": "https://arxiv.org/abs/2611.26816",
-      "authors": "Chen-You Su, Suparna Seshadri ほか"
+      "title": "Online Scheduling for Entanglement Distillation: Learning When to Wait",
+      "url": "https://arxiv.org/abs/2611.28373",
+      "authors": "Panagiotis Promponas, Spyros Tserkis ほか"
     },
     {
-      "title": "Scheduling the quantum implementation of the Trotter decomposition for Hamiltonian simulation",
-      "url": "https://arxiv.org/abs/2611.26884",
-      "authors": "Augustin Ho (Graduate School of Science and Technology, Keio University ほか"
+      "title": "Verification and Evaluation of A Comprehensive Quantum Simulation Compiler",
+      "url": "https://arxiv.org/abs/2611.28388",
+      "authors": "Bhuwan Joshi, Zoukarneini Difaizi Tagba ほか"
     },
     {
-      "title": "Analog Explorations of Quantum State Measurement",
-      "url": "https://arxiv.org/abs/2611.26889",
-      "authors": "Benjamin Krawciw, James P. Crutchfield"
+      "title": "Froq: Safe Speculative Execution on Live Quantum States for FTQC",
+      "url": "https://arxiv.org/abs/2611.28427",
+      "authors": "Yicheng Guang, Yueqi Chen"
     }
   ]
 }
