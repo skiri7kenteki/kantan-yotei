@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-24",
-  "fetchedAt": "2026-11-24T20:44:27+00:00",
-  "newCount": 110,
+  "date": "2026-11-25",
+  "fetchedAt": "2026-11-25T20:45:42+00:00",
+  "newCount": 66,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "State-selective dynamical freezing in driven Rydberg atom chains",
-      "url": "https://arxiv.org/abs/2611.28215",
-      "authors": "Madhumita Sarkar, Sougato Bose ほか"
+      "title": "A Causal Schr\\\"odinger-Newton Theory that Conserves Energy and Momentum",
+      "url": "https://arxiv.org/abs/2611.31247",
+      "authors": "Daisuke Miki, Yanbei Chen ほか"
     },
     {
-      "title": "Foliated surface codes for optimal skip-gate leakage correction",
-      "url": "https://arxiv.org/abs/2611.28219",
-      "authors": "Runjiang Bi, Nikita Astrakhantsev ほか"
+      "title": "Physical Realization of the Luczka Model: Inducing Interaction and Entanglement Between Spins",
+      "url": "https://arxiv.org/abs/2611.31248",
+      "authors": "A. R. Kuzmak"
     },
     {
-      "title": "Mitigating large circuits with a learned small-circuit mitigator",
-      "url": "https://arxiv.org/abs/2611.28261",
-      "authors": "Thi Ha Kyaw, Pablo D\\'iez-Valle ほか"
+      "title": "Beyond Quantum Mechanics: From Nonlinear to Emergent and Solitonic Approaches",
+      "url": "https://arxiv.org/abs/2611.31304",
+      "authors": "Niko Brimi"
     },
     {
-      "title": "Comment on phase vortex lattices in neutron interferometry",
-      "url": "https://arxiv.org/abs/2611.28316",
-      "authors": "Wolfgang Treimer, Terrence Jach ほか"
+      "title": "A counterexample to the Ho-Hsieh VQCS saturation conjecture",
+      "url": "https://arxiv.org/abs/2611.31308",
+      "authors": "Edward Jiang"
     },
     {
-      "title": "Distant Bell States via Measured Spin Chain Dynamics",
-      "url": "https://arxiv.org/abs/2611.28325",
-      "authors": "Ralph Jason Costales, Sougato Bose"
+      "title": "Certifying closed labs in device-independent tests of indefinite causality",
+      "url": "https://arxiv.org/abs/2611.31365",
+      "authors": "Hannah Seabrook, Fabio Costa ほか"
     },
     {
-      "title": "Tailored Magic States for Algorithmic Primitives",
-      "url": "https://arxiv.org/abs/2611.28353",
-      "authors": "Matthew Steinberg, Joseph Sullivan ほか"
+      "title": "Ground-State Chiral Quantum Clusters",
+      "url": "https://arxiv.org/abs/2611.31370",
+      "authors": "Matteo Massaro, Adolfo del Campo"
     },
     {
-      "title": "Incompressible quantum information",
-      "url": "https://arxiv.org/abs/2611.28361",
-      "authors": "Lasse H. Wolff, Matthias Christandl ほか"
+      "title": "Spinal reflected entropy reveals logical magic",
+      "url": "https://arxiv.org/abs/2611.31375",
+      "authors": "Zong-Yue Hou, Yuzhen Zhang ほか"
     },
     {
-      "title": "Online Scheduling for Entanglement Distillation: Learning When to Wait",
-      "url": "https://arxiv.org/abs/2611.28373",
-      "authors": "Panagiotis Promponas, Spyros Tserkis ほか"
+      "title": "Quantum State Preparation from Nonreversible Markov Chains via Spectral Filtering",
+      "url": "https://arxiv.org/abs/2611.31380",
+      "authors": "Wael Drif"
     },
     {
-      "title": "Verification and Evaluation of A Comprehensive Quantum Simulation Compiler",
-      "url": "https://arxiv.org/abs/2611.28388",
-      "authors": "Bhuwan Joshi, Zoukarneini Difaizi Tagba ほか"
+      "title": "A Constraint-Preserving Preconditioned Quantum Solver for Heterogeneous Brinkman Flo",
+      "url": "https://arxiv.org/abs/2611.31402",
+      "authors": "Shreya Savadatti, Franz Franchetti"
     },
     {
-      "title": "Froq: Safe Speculative Execution on Live Quantum States for FTQC",
-      "url": "https://arxiv.org/abs/2611.28427",
-      "authors": "Yicheng Guang, Yueqi Chen"
+      "title": "Quantum Control Under Control-Dependent Decoherence",
+      "url": "https://arxiv.org/abs/2611.31444",
+      "authors": "Cyril Morluyan Cordor, Anthony M. Bloch ほか"
     }
   ]
 }
