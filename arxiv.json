@@ -1,59 +1,59 @@
 {
   "source": "arXiv quant-ph",
-  "date": "2026-11-25",
-  "fetchedAt": "2026-11-25T20:45:42+00:00",
-  "newCount": 66,
+  "date": "2026-11-26",
+  "fetchedAt": "2026-11-26T20:44:38+00:00",
+  "newCount": 84,
   "listUrl": "https://arxiv.org/list/quant-ph/new",
   "items": [
     {
-      "title": "A Causal Schr\\\"odinger-Newton Theory that Conserves Energy and Momentum",
-      "url": "https://arxiv.org/abs/2611.31247",
-      "authors": "Daisuke Miki, Yanbei Chen ほか"
+      "title": "Sharp one-shot bounds and optimal exponents of universal randomness extraction",
+      "url": "https://arxiv.org/abs/2611.33270",
+      "authors": "Bartosz Regula, Hao-Chung Cheng"
     },
     {
-      "title": "Physical Realization of the Luczka Model: Inducing Interaction and Entanglement Between Spins",
-      "url": "https://arxiv.org/abs/2611.31248",
-      "authors": "A. R. Kuzmak"
+      "title": "Structure-factor witnesses of thermal entanglement: exact optimal covariance criteria for the XY chain",
+      "url": "https://arxiv.org/abs/2611.33284",
+      "authors": "Julia Math\\'e, Ayaka Usui ほか"
     },
     {
-      "title": "Beyond Quantum Mechanics: From Nonlinear to Emergent and Solitonic Approaches",
-      "url": "https://arxiv.org/abs/2611.31304",
-      "authors": "Niko Brimi"
+      "title": "Quditology: harnessing many levels for quantum information processing",
+      "url": "https://arxiv.org/abs/2611.33299",
+      "authors": "Abhijit Chakraborty, Zheng Shi ほか"
     },
     {
-      "title": "A counterexample to the Ho-Hsieh VQCS saturation conjecture",
-      "url": "https://arxiv.org/abs/2611.31308",
-      "authors": "Edward Jiang"
+      "title": "Gauge symmetry permits extremely low-depth random unitary circuits",
+      "url": "https://arxiv.org/abs/2611.33312",
+      "authors": "Yunfei Wang, Yuqing Li ほか"
     },
     {
-      "title": "Certifying closed labs in device-independent tests of indefinite causality",
-      "url": "https://arxiv.org/abs/2611.31365",
-      "authors": "Hannah Seabrook, Fabio Costa ほか"
+      "title": "When does a noisy Bell pair attain the Rains bound?",
+      "url": "https://arxiv.org/abs/2611.33317",
+      "authors": "Matthew Barber, Stefano Pirandola"
     },
     {
-      "title": "Ground-State Chiral Quantum Clusters",
-      "url": "https://arxiv.org/abs/2611.31370",
-      "authors": "Matteo Massaro, Adolfo del Campo"
+      "title": "Chiral Domain-Wall Modes in Topological Adaptive Quantum Dynamics",
+      "url": "https://arxiv.org/abs/2611.33328",
+      "authors": "Asadullah Bhuiyan, Haining Pan ほか"
     },
     {
-      "title": "Spinal reflected entropy reveals logical magic",
-      "url": "https://arxiv.org/abs/2611.31375",
-      "authors": "Zong-Yue Hou, Yuzhen Zhang ほか"
+      "title": "Using a static spacetime subsystem code to calculate Floquet code distance",
+      "url": "https://arxiv.org/abs/2611.33337",
+      "authors": "Ethan Egger, Milad Marvian"
     },
     {
-      "title": "Quantum State Preparation from Nonreversible Markov Chains via Spectral Filtering",
-      "url": "https://arxiv.org/abs/2611.31380",
-      "authors": "Wael Drif"
+      "title": "Quantum Copy Complexity of Testing Monotonicity and Other Properties",
+      "url": "https://arxiv.org/abs/2611.33340",
+      "authors": "Preksha Naik"
     },
     {
-      "title": "A Constraint-Preserving Preconditioned Quantum Solver for Heterogeneous Brinkman Flo",
-      "url": "https://arxiv.org/abs/2611.31402",
-      "authors": "Shreya Savadatti, Franz Franchetti"
+      "title": "Nitrogen-Vacancy Nuclear Magnetic Resonance Spectroscopy of $^{15}$N Spins in Potassium Nitrite Solution",
+      "url": "https://arxiv.org/abs/2611.33360",
+      "authors": "Sehrish Iqbal, Jitender Kumar ほか"
     },
     {
-      "title": "Quantum Control Under Control-Dependent Decoherence",
-      "url": "https://arxiv.org/abs/2611.31444",
-      "authors": "Cyril Morluyan Cordor, Anthony M. Bloch ほか"
+      "title": "Constructively Embedding Quantum Error-Correcting Codes",
+      "url": "https://arxiv.org/abs/2611.33389",
+      "authors": "Yucheng He, Todd A. Brun"
     }
   ]
 }
